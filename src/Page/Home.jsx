@@ -36,7 +36,7 @@ export const Home = () => {
       </div>
       <div
         className={
-          "lg:mx-[15.25rem] relative  -mt-[7.15rem] z-50  flex py-[4.38rem] gap-[3.3rem] rounded-[0.875rem] bg-[#4D2C5E] lg:px-[2.5rem]"
+          "lg:mx-[15.25rem] relative  lg:-mt-[7.15rem] z-50  flex flex-col lg:flex-row py-[4.38rem] gap-[3.3rem] rounded-[0.875rem] bg-[#4D2C5E] lg:px-[2.5rem]"
         }
       >
         <Outline

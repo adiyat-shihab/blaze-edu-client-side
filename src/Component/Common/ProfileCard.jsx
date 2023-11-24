@@ -1,5 +1,6 @@
 import { Avatar, Button, message } from "antd";
 import { UseAuth } from "../../Hooks/UseAuth.jsx";
+import { Link } from "react-router-dom";
 
 export const ProfileCard = ({ name, image, setProfile }) => {
   const { SignOut } = UseAuth();
@@ -42,20 +43,27 @@ export const ProfileCard = ({ name, image, setProfile }) => {
                   </tr>
                 </tbody>
               </table>
+              <div className={"flex items-center justify-between px-3"}>
+                <div className={"flex justify-center"}>
+                  <button className="hidden lg:inline-block py-2 px-4 bg-[#FF7426] hover:bg-[#ff5e00] text-sm text-white font-bold rounded-xl transition duration-200">
+                    <Link to={"/dashboard"}>Dashboard</Link>
+                  </button>
+                </div>
 
-              <div className="text-center my-3">
-                <Button
-                  onClick={() =>
-                    SignOut().then((res) => {
-                      setProfile(false);
-                      message.success("Sign out ");
-                    })
-                  }
-                  className={"bg-[#FDF8EE]"}
-                  type="text"
-                >
-                  Sign Out
-                </Button>
+                <div className="text-center my-3">
+                  <Button
+                    onClick={() =>
+                      SignOut().then((res) => {
+                        setProfile(false);
+                        message.success("Sign out ");
+                      })
+                    }
+                    className={"bg-[#FDF8EE]"}
+                    type="text"
+                  >
+                    Sign Out
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

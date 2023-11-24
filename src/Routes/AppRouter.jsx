@@ -4,6 +4,9 @@ import App from "../App.jsx";
 import { Register } from "../Page/Register.jsx";
 import { Login } from "../Page/Login.jsx";
 import { ApplyTeacher } from "../Page/ApplyTeacher.jsx";
+import { DashBoard } from "../Page/DashBoard.jsx";
+import { TeacherRequest } from "../Page/Dashboard/TeacherRequest.jsx";
+import { UserProfile } from "../Page/Dashboard/UserProfile.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,6 +27,20 @@ const router = createBrowserRouter([
       {
         path: "/teacher/apply",
         element: <ApplyTeacher />,
+      },
+      {
+        path: "/dashboard",
+        element: <DashBoard />,
+        children: [
+          {
+            path: "/dashboard",
+            element: <UserProfile />,
+          },
+          {
+            path: "/dashboard/teacher/request",
+            element: <TeacherRequest />,
+          },
+        ],
       },
     ],
   },

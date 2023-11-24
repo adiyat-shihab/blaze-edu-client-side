@@ -13,7 +13,6 @@ export const ApplyTeacher = () => {
   };
   const [experience, setExperience] = useState("");
   const [category, setCategory] = useState("");
-  const [teacher, setTeacher] = useState({});
 
   const handleExperienced = (value) => {
     setExperience(value);
@@ -43,7 +42,6 @@ export const ApplyTeacher = () => {
       .post("/teacher/apply", teacher)
       .then((res) => console.log(res));
   };
-  console.log(teacher);
   return (
     <>
       <Helmet>

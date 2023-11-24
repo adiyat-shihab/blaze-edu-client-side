@@ -7,16 +7,18 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, redirect, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import useAxiosOpen from "../Hooks/UseAxiosOpen.jsx";
 
 export const Register = () => {
   const { SignUp, userDetails } = UseAuth();
+  const axiosOpen = useAxiosOpen();
   const [fileList, setFileList] = useState([]);
   const [image, setImage] = useState("");
   const navigate = useNavigate();
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
-
+  console.log(axiosOpen);
   const customRequest = async ({ file, onSuccess, onError }) => {
     const image = { image: file };
 
@@ -43,21 +45,16 @@ export const Register = () => {
 
   const { register, handleSubmit } = useForm();
   const onSubmit = async (data) => {
-    // const image = { image: data.image[0] };
-    // const res = await axios.post(
-    //   "https://api.imgbb.com/1/upload?key=0ebb240c8ce479a4159793d2a4acc3f4",
-    //   image,
-    //   {
-    //     headers: {
-    //       "content-type": "multipart/form-data",
-    //     },
-    //   },
-    // );
-    //
-    // console.log(res.data);
-    // console.log(image);
-
-    await SignUp(data.email, data.password, data.name, image).then(() => {
+    await SignUp(data.email, data.password, data.name, image).then(async () => {
+      const setuser = {
+        email: data.email,
+        password: data.password,
+        name: data.name,
+        photo: image,
+      };
+      await axiosOpen
+        .post("/user/add", setuser)
+        .then((res) => console.log(res));
       message.success("Sign Up Successful");
       navigate("/");
     });

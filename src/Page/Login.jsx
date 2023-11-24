@@ -26,7 +26,7 @@ export const Login = () => {
             <div className="md:flex w-full">
               <div className="hidden md:block w-1/2 bg-[#FDF8EE] py-10 px-10">
                 <LazyLoadImage
-                  src={"https://i.ibb.co/Ry6LLK4/Fill-out-amico-1.png"}
+                  src={"https://i.ibb.co/2F7KhWG/Welcome-cuate.png"}
                   effect={"blur"}
                 />
               </div>

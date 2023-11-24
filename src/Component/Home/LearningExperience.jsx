@@ -12,7 +12,7 @@ export const LearningExperience = () => {
           <LazyLoadImage
             effect={"blur"}
             src={"https://i.ibb.co/0qnQbsP/OBJECTS-1.png"}
-            className={"mt-14"}
+            className={"mt-14 lg:w-[440px]"}
           ></LazyLoadImage>
         </div>
         <div>

@@ -13,12 +13,16 @@ export const Navbar = (props) => {
   return (
     <>
       <nav className="relative bg-[#FDF8EE]  py-4 flex justify-between items-center  px-8">
-        <a className="text-3xl font-bold leading-none" href="#">
+        <Link
+          to={"/"}
+          className="text-3xl flex gap-4 items-center font-bold leading-none"
+        >
           <LazyLoadImage
             src={"https://i.ibb.co/48ZN6dN/Group.png"}
             effect={"blur"}
           />
-        </a>
+          <p className={" "}>Blaze Edu</p>
+        </Link>
         <div className="lg:hidden">
           <button
             onClick={() => setToggleButton(true)}
@@ -106,9 +110,13 @@ export const Navbar = (props) => {
             </svg>
           </li>
           <li>
-            <a className="text-sm text-gray-400 hover:text-gray-500" href="#">
-              Contact
-            </a>
+            <NavLink
+              to={"/teacher/apply"}
+              className="text-sm text-gray-400 hover:text-gray-500"
+              href="#"
+            >
+              Tech On Blaze edu
+            </NavLink>
           </li>
         </ul>
 
@@ -196,10 +204,10 @@ export const Navbar = (props) => {
                 </li>
               </ul>
             </div>
-            <div class="mt-auto">
-              <div class="pt-6">
+            <div className="mt-auto">
+              <div className="pt-6">
                 <a
-                  class="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
+                  className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
                   href="#"
                 >
                   Sign in

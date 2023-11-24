@@ -1,5 +1,6 @@
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Button, ConfigProvider } from "antd";
+import { Link } from "react-router-dom";
 
 export const JoinTeacher = () => {
   return (
@@ -33,7 +34,7 @@ export const JoinTeacher = () => {
               className={"bg-[#FF7426] font-medium h-12 text-[16px] "}
               type="primary"
             >
-              Start Teaching Today
+              <Link to={"/teacher/apply"}> Start Teaching Today</Link>
             </Button>
           </ConfigProvider>
         </div>

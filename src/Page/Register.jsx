@@ -18,7 +18,7 @@ export const Register = () => {
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
-  console.log(axiosOpen);
+
   const customRequest = async ({ file, onSuccess, onError }) => {
     const image = { image: file };
 

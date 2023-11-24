@@ -3,8 +3,10 @@ import { useForm } from "react-hook-form";
 import { ConfigProvider, Select } from "antd";
 import { useState } from "react";
 import { UseAuth } from "../Hooks/UseAuth.jsx";
+import useAxiosOpen from "../Hooks/UseAxiosOpen.jsx";
 
 export const ApplyTeacher = () => {
+  const axiosOpen = useAxiosOpen();
   const { userDetails } = UseAuth();
   const containerStyle = {
     backgroundImage: 'url("https://i.ibb.co/rMLnD8B/Group-327.png")',
@@ -27,15 +29,19 @@ export const ApplyTeacher = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const teacher = {
       teacherName: data.name,
       teacherTitle: data.title,
       teacherExperience: experience,
       teacherCategory: category,
-      teacherPhoto: userDetails?.photoURL,
+      teacherPhoto: userDetails.photoURL,
+      teacherEmail: userDetails.email,
     };
-    setTeacher(teacher);
+
+    await axiosOpen
+      .post("/teacher/apply", teacher)
+      .then((res) => console.log(res));
   };
   console.log(teacher);
   return (

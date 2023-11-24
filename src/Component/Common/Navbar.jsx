@@ -44,7 +44,8 @@ export const Navbar = (props) => {
             className={"text-gray-300"}
             style={({ isActive }) => {
               return {
-                color: isActive ? "#3BCF93" : "#afafaf",
+                color: isActive ? "#FF7426" : "#afafaf",
+                fontWeight: isActive && "bold",
               };
             }}
           >
@@ -114,6 +115,12 @@ export const Navbar = (props) => {
               to={"/teacher/apply"}
               className="text-sm text-gray-400 hover:text-gray-500"
               href="#"
+              style={({ isActive }) => {
+                return {
+                  color: isActive ? "#FF7426" : "#afafaf",
+                  fontWeight: isActive && "bold",
+                };
+              }}
             >
               Tech On Blaze edu
             </NavLink>
@@ -123,13 +130,13 @@ export const Navbar = (props) => {
         {userDetails ? (
           <div className={"p-1 hidden lg:block bg-white rounded-full"}>
             <Avatar
-              size={64}
+              size={"large"}
               src={userDetails?.photoURL}
               onClick={() => setProfile(!profile)}
             />
           </div>
         ) : (
-          <button className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200">
+          <button className="hidden lg:inline-block py-2 px-6 bg-[#FF7426] hover:bg-[#ff5e00] text-sm text-white font-bold rounded-xl transition duration-200">
             <Link to={"/Register"}>Sign Up</Link>
           </button>
         )}

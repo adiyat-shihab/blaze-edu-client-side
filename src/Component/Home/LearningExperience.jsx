@@ -1,12 +1,17 @@
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export const LearningExperience = () => {
+  const containerStyle = {
+    backgroundImage: 'url("https://i.ibb.co/TvGB2d4/Group-380.png")',
+    backgroundRepeat: "no-repeat",
+  };
   return (
-    <>
+    <div>
       <div
         className={
-          "bg-[#FDF8EE] flex-col lg:flex-row flex items-center justify-center gap-[10rem]"
+          "bg-[#FDF8EE] flex-col relative lg:flex-row flex items-center justify-center gap-[10rem]"
         }
+        style={containerStyle}
       >
         <div>
           <LazyLoadImage
@@ -69,6 +74,6 @@ export const LearningExperience = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };

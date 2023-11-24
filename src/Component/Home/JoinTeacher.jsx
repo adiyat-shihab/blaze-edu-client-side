@@ -17,6 +17,10 @@ export const JoinTeacher = () => {
           <h1 className={"text-6xl font-bold text-[#FF7426]"}>
             Join As A Teacher
           </h1>
+          <p>
+            Instructors from around the world teach millions of learners on
+            Udemy. We provide the tools and skills to teach what you love.
+          </p>
           <ConfigProvider
             theme={{
               token: {

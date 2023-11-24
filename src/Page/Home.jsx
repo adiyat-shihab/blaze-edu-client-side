@@ -1,6 +1,8 @@
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Outline } from "../Component/Home/Outline.jsx";
 import { Helmet } from "react-helmet";
+import { LearningExperience } from "../Component/Home/LearningExperience.jsx";
+import { Partners } from "../Component/Home/Partners.jsx";
 
 export const Home = () => {
   const containerStyle = {
@@ -61,6 +63,9 @@ export const Home = () => {
           }
         />
       </div>
+
+      <LearningExperience />
+      <Partners />
     </div>
   );
 };

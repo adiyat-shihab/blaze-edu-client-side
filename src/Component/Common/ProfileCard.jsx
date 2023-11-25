@@ -6,7 +6,7 @@ export const ProfileCard = ({ name, image, setProfile }) => {
   const { SignOut } = UseAuth();
   return (
     <>
-      <div className="relative ">
+      <div className="relative  ">
         <div className="max-w-xs absolute right-4 z-50 ">
           <div className="bg-white shadow-xl rounded-lg py-3">
             <div className="photo-wrapper flex justify-center p-2">
@@ -45,7 +45,7 @@ export const ProfileCard = ({ name, image, setProfile }) => {
               </table>
               <div className={"flex items-center justify-between px-3"}>
                 <div className={"flex justify-center"}>
-                  <button className="hidden lg:inline-block py-2 px-4 bg-[#FF7426] hover:bg-[#ff5e00] text-sm text-white font-bold rounded-xl transition duration-200">
+                  <button className="hidden lg:inline-block py-[5px] px-4 bg-[#FF7426] hover:bg-[#ff5e00] text-sm text-white font-medium rounded transition duration-200">
                     <Link to={"/dashboard"}>Dashboard</Link>
                   </button>
                 </div>

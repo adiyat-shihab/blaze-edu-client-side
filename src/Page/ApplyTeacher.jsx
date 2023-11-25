@@ -36,6 +36,7 @@ export const ApplyTeacher = () => {
       teacherCategory: category,
       teacherPhoto: userDetails.photoURL,
       teacherEmail: userDetails.email,
+      status: "pending",
     };
 
     await axiosOpen

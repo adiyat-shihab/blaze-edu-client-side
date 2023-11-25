@@ -7,9 +7,12 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../../firebase.config.js";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosOpen from "../Hooks/UseAxiosOpen.jsx";
 export const authContext = createContext(null);
 export const AuthContext = ({ children }) => {
   const [userDetails, setUserDetails] = useState(null);
+  const axiosOpen = useAxiosOpen();
   const SignUp = (email, password, name, photo) => {
     return createUserWithEmailAndPassword(auth, email, password).then(
       async (r) =>
@@ -25,19 +28,20 @@ export const AuthContext = ({ children }) => {
   const SignOut = () => {
     return signOut(auth);
   };
+
+  const { data } = useQuery({
+    queryKey: ["Role", userDetails?.email],
+    queryFn: async ({ queryKey }) => {
+      return await axiosOpen.get(`/user/${queryKey[1]}`);
+    },
+  });
+
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUserDetails(currentUser);
-        const userStore = {
-          displayName: currentUser.displayName,
-          email: currentUser.email,
-          photoURL: currentUser.photoURL,
-        };
-        localStorage.setItem("UserDetails", JSON.stringify(userStore));
       } else {
         setUserDetails(null);
-        localStorage.removeItem("UserDetails");
       }
     });
     return () => {
@@ -45,7 +49,9 @@ export const AuthContext = ({ children }) => {
     };
   }, []);
   return (
-    <authContext.Provider value={{ SignUp, Signin, userDetails, SignOut }}>
+    <authContext.Provider
+      value={{ SignUp, Signin, userDetails, SignOut, data }}
+    >
       {children}
     </authContext.Provider>
   );

@@ -5,17 +5,10 @@ import { UseAuth } from "../../Hooks/UseAuth.jsx";
 import { ProfileCard } from "./ProfileCard.jsx";
 import { Avatar } from "antd";
 
-export const Navbar = (props) => {
+export const Navbar = () => {
   const [toggleButton, setToggleButton] = useState(false);
   const [profile, setProfile] = useState(false);
-  const [Details, setDetails] = useState();
-  const { userDetails } = UseAuth();
-  const data = JSON.parse(localStorage.getItem("UserDetails"));
-  useEffect(() => {
-    if (data) {
-      setDetails(data);
-    }
-  }, [data]);
+  const { userDetails, data } = UseAuth();
 
   return (
     <>
@@ -45,7 +38,7 @@ export const Navbar = (props) => {
             </svg>
           </button>
         </div>
-        <ul className="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
+        <ul className="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto  lg:items-center lg:w-auto lg:space-x-6">
           <NavLink
             to={"/"}
             className={"text-gray-300"}
@@ -106,39 +99,47 @@ export const Navbar = (props) => {
               Pricing
             </a>
           </li>
-          <li className="text-gray-300">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              stroke="currentColor"
-              className="w-4 h-4 current-fill"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-            </svg>
-          </li>
-          <li>
-            <NavLink
-              to={"/teacher/apply"}
-              className="text-sm text-gray-400 hover:text-gray-500"
-              href="#"
-              style={({ isActive }) => {
-                return {
-                  color: isActive ? "#FF7426" : "#afafaf",
-                  fontWeight: isActive && "bold",
-                };
-              }}
-            >
-              Tech On Blaze edu
-            </NavLink>
-          </li>
+
+          {data?.data?.role === "admin" || (
+            <div className={"flex items-center gap-4"}>
+              <li className="text-gray-300">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  stroke="currentColor"
+                  className="w-4 h-4 current-fill"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                </svg>
+              </li>
+              <li>
+                <NavLink
+                  to={"/teacher/apply"}
+                  className="text-sm text-gray-400 hover:text-gray-500"
+                  style={({ isActive }) => {
+                    return {
+                      color: isActive ? "#FF7426" : "#afafaf",
+                      fontWeight: isActive && "bold",
+                    };
+                  }}
+                >
+                  Tech On Blaze edu
+                </NavLink>
+              </li>
+            </div>
+          )}
         </ul>
 
-        {data ? (
-          <div className={"p-1 hidden lg:block bg-white rounded-full"}>
+        {userDetails ? (
+          <div
+            className={
+              "p-1 cursor-pointer hidden lg:block bg-white rounded-full"
+            }
+          >
             <Avatar
               size={"large"}
-              src={data?.photoURL}
+              src={userDetails?.photoURL}
               onClick={() => setProfile(!profile)}
             />
           </div>
@@ -221,19 +222,19 @@ export const Navbar = (props) => {
             <div className="mt-auto">
               <div className="pt-6">
                 <a
-                  className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
+                  className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold  bg-gray-50 hover:bg-gray-100 rounded-xl"
                   href="#"
                 >
                   Sign in
                 </a>
                 <a
-                  class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
+                  className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
                   href="#"
                 >
                   Sign Up
                 </a>
               </div>
-              <p class="my-4 text-xs text-center text-gray-400">
+              <p className="my-4 text-xs text-center text-gray-400">
                 <span>Copyright © 2021</span>
               </p>
             </div>
@@ -242,8 +243,8 @@ export const Navbar = (props) => {
       )}
       {profile && (
         <ProfileCard
-          name={data.displayName}
-          image={data.photoURL}
+          name={userDetails.displayName}
+          image={userDetails.photoURL}
           setProfile={setProfile}
         />
       )}

@@ -8,6 +8,8 @@ import axios from "axios";
 import { Link, redirect, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import useAxiosOpen from "../Hooks/UseAxiosOpen.jsx";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 export const Register = () => {
   const { SignUp, userDetails } = UseAuth();
@@ -15,9 +17,11 @@ export const Register = () => {
   const [fileList, setFileList] = useState([]);
   const [image, setImage] = useState("");
   const navigate = useNavigate();
+  const [phoneNumber, setPhoneNumber] = useState("");
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
+  console.log(phoneNumber);
 
   const customRequest = async ({ file, onSuccess, onError }) => {
     const image = { image: file };
@@ -51,12 +55,13 @@ export const Register = () => {
         password: data.password,
         name: data.name,
         photo: image,
+        phone: phoneNumber,
+        role: "student",
       };
       await axiosOpen.post("/user/add", setuser).then((res) => {
-        localStorage.setItem("Details", JSON.stringify(setuser));
+        message.success("Sign Up Successful");
+        navigate("/");
       });
-      message.success("Sign Up Successful");
-      navigate("/");
     });
   };
 
@@ -112,7 +117,6 @@ export const Register = () => {
                     </div>
                   </div>
                 </div>
-
                 <div className="flex -mx-3">
                   <div className="w-full px-3 mb-6">
                     <label className="text-xs font-semibold px-1">
@@ -127,6 +131,24 @@ export const Register = () => {
                         className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                         placeholder="************"
                         {...register("password", { required: true })}
+                      />
+                    </div>
+                  </div>
+                </div>{" "}
+                <div className="flex -mx-3">
+                  <div className="w-full px-3 mb-6">
+                    <label className="text-xs font-semibold px-1">
+                      Phone Number
+                    </label>
+                    <div className="flex">
+                      <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                        <i className="mdi mdi-lock-outline text-gray-400 text-lg"></i>
+                      </div>
+                      <PhoneInput
+                        country={"bd"}
+                        inputStyle={{ width: "100%", marginLeft: "-30px" }}
+                        buttonStyle={{ marginLeft: "-33px" }}
+                        onChange={(phone) => setPhoneNumber(phone)}
                       />
                     </div>
                   </div>
@@ -152,11 +174,22 @@ export const Register = () => {
                 </div>
                 <div className="flex -mx-3">
                   <div className="w-full px-3 mb-5">
-                    <input
-                      className="block cursor-pointer w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
-                      type="submit"
-                      placeholder="Register Now"
-                    />
+                    {image ? (
+                      <input
+                        className="block cursor-pointer w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 -mt-5 text-white rounded-lg px-3 py-3 font-semibold"
+                        type="submit"
+                        placeholder="Register Now"
+                      />
+                    ) : (
+                      <div className={"flex justify-center"}>
+                        <Button
+                          disabled
+                          className=" h-10 -mt-5  w-full max-w-xs mx-auto  focus:bg-indigo-700  rounded-lg font-semibold"
+                        >
+                          Submit
+                        </Button>
+                      </div>
+                    )}
                     <div className={"pt-4"}>
                       <p className={"text-center"}>
                         Already an User?{" "}

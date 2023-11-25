@@ -123,23 +123,15 @@ export const DashBoard = () => {
                 <div className="pb-4 mt-20">
                   <button
                     type="button"
-                    className="flex items-center justify-between w-full px-4 py-3 text-sm font-medium text-gray-900 transition-all duration-200 rounded-lg hover:bg-gray-100"
+                    className="flex items-center  w-full px-4 py-3 text-sm font-medium text-gray-900 transition-all duration-200 rounded-lg hover:bg-gray-100"
                   >
-                    <img
+                    <LazyLoadImage
                       className="flex-shrink-0 object-cover w-6 h-6 mr-3 rounded-full"
-                      src="https://landingfoliocom.imgix.net/store/collection/clarity-dashboard/images/vertical-menu/2/avatar-male.png"
+                      src={userDetails?.photoURL}
                       alt=""
+                      effect={"blur"}
                     />
-                    Jacob Jones
-                    <svg
-                      className="w-5 h-5 ml-auto"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                    </svg>
+                    {userDetails?.displayName}
                   </button>
                 </div>
               </div>

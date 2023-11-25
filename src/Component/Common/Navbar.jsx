@@ -100,7 +100,7 @@ export const Navbar = () => {
             </a>
           </li>
 
-          {data?.data?.role === "admin" || (
+          {data?.data?.role === "admin" || data?.data?.role === "teacher" || (
             <div className={"flex items-center gap-4"}>
               <li className="text-gray-300">
                 <svg
@@ -245,6 +245,9 @@ export const Navbar = () => {
         <ProfileCard
           name={userDetails.displayName}
           image={userDetails.photoURL}
+          phone={data?.data?.phone}
+          role={data?.data?.role}
+          email={userDetails.email}
           setProfile={setProfile}
         />
       )}

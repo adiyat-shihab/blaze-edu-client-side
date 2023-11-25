@@ -1,10 +1,17 @@
 import { Avatar, Button, ConfigProvider, Table, Tooltip } from "antd";
 import useAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
-import { useQuery } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 
 export const TeacherRequest = () => {
   const axiosOpen = useAxiosOpen();
+
+  const queryClient = useQueryClient();
   const { Column } = Table;
   const { data } = useQuery({
     queryKey: ["allUsers"],
@@ -13,7 +20,19 @@ export const TeacherRequest = () => {
     },
   });
 
-  console.log(data);
+  const handleAccept = (email) => {
+    console.log(email);
+    mutation.mutate(email);
+  };
+
+  const mutation = useMutation({
+    mutationFn: (put) => {
+      return axiosOpen.put(`/teacher/accept/${put}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["allUsers"] });
+    },
+  });
 
   return (
     <>
@@ -46,9 +65,9 @@ export const TeacherRequest = () => {
           />
           <Column title="Status" dataIndex="status" key="status" />
           <Column
-            dataIndex={"teacherEmail"}
-            key={"teacherEmail"}
-            render={(email) => {
+            dataIndex="teacher info"
+            key="teacherEmail"
+            render={(value, record, index) => {
               return (
                 <div className={" flex gap-4"}>
                   <Tooltip title={"Accept"}>
@@ -62,6 +81,7 @@ export const TeacherRequest = () => {
                     >
                       <Button
                         className={"bg-green-500 hover:text-white text-white"}
+                        onClick={() => handleAccept(record?.teacherEmail)}
                         icon={<CheckCircleOutlined />}
                       ></Button>
                     </ConfigProvider>
@@ -76,10 +96,17 @@ export const TeacherRequest = () => {
                         },
                       }}
                     >
-                      <Button
-                        className={"bg-red-500 hover:text-white text-white"}
-                        icon={<CloseCircleOutlined />}
-                      ></Button>
+                      {record?.status === "approve" ? (
+                        <Button
+                          icon={<CloseCircleOutlined />}
+                          disabled
+                        ></Button>
+                      ) : (
+                        <Button
+                          className={"bg-red-500 hover:text-white text-white"}
+                          icon={<CloseCircleOutlined />}
+                        ></Button>
+                      )}
                     </ConfigProvider>
                   </Tooltip>
                 </div>

@@ -2,7 +2,14 @@ import { Avatar, Button, message } from "antd";
 import { UseAuth } from "../../Hooks/UseAuth.jsx";
 import { Link } from "react-router-dom";
 
-export const ProfileCard = ({ name, image, setProfile }) => {
+export const ProfileCard = ({
+  name,
+  image,
+  setProfile,
+  role,
+  phone,
+  email,
+}) => {
   const { SignOut } = UseAuth();
   return (
     <>
@@ -17,29 +24,21 @@ export const ProfileCard = ({ name, image, setProfile }) => {
                 {name}
               </h3>
               <div className="text-center text-gray-400 text-xs font-semibold">
-                <p>Web Developer</p>
+                <p> {role}</p>
               </div>
               <table className="text-xs my-3">
                 <tbody>
                   <tr>
                     <td className="px-2 py-2 text-gray-500 font-semibold">
-                      Address
+                      Email
                     </td>
-                    <td className="px-2 py-2">
-                      Chatakpur-3, Dhangadhi Kailali
-                    </td>
+                    <td className="px-2 py-2">{email}</td>
                   </tr>
                   <tr>
                     <td className="px-2 py-2 text-gray-500 font-semibold">
                       Phone
                     </td>
-                    <td className="px-2 py-2">+977 9955221114</td>
-                  </tr>
-                  <tr>
-                    <td className="px-2 py-2 text-gray-500 font-semibold">
-                      Email
-                    </td>
-                    <td className="px-2 py-2">john@exmaple.com</td>
+                    <td className="px-2 py-2">+{phone}</td>
                   </tr>
                 </tbody>
               </table>

@@ -12,7 +12,7 @@ export const UserProfile = () => {
         <div className={"flex gap-[61px] mt-16"}>
           <LazyLoadImage
             effect={"blur"}
-            className={"w-[150px] rounded-full h-[150px]"}
+            className={"w-[150px] rounded-full "}
             src={data?.data?.photo}
             alt=""
           />

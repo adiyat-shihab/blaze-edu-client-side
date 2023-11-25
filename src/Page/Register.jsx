@@ -52,9 +52,9 @@ export const Register = () => {
         name: data.name,
         photo: image,
       };
-      await axiosOpen
-        .post("/user/add", setuser)
-        .then((res) => console.log(res));
+      await axiosOpen.post("/user/add", setuser).then((res) => {
+        localStorage.setItem("Details", JSON.stringify(setuser));
+      });
       message.success("Sign Up Successful");
       navigate("/");
     });

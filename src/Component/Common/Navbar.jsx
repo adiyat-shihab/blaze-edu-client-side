@@ -8,7 +8,14 @@ import { Avatar } from "antd";
 export const Navbar = (props) => {
   const [toggleButton, setToggleButton] = useState(false);
   const [profile, setProfile] = useState(false);
+  const [Details, setDetails] = useState();
   const { userDetails } = UseAuth();
+  const data = JSON.parse(localStorage.getItem("UserDetails"));
+  useEffect(() => {
+    if (data) {
+      setDetails(data);
+    }
+  }, [data]);
 
   return (
     <>
@@ -127,11 +134,11 @@ export const Navbar = (props) => {
           </li>
         </ul>
 
-        {userDetails ? (
+        {data ? (
           <div className={"p-1 hidden lg:block bg-white rounded-full"}>
             <Avatar
               size={"large"}
-              src={userDetails?.photoURL}
+              src={data?.photoURL}
               onClick={() => setProfile(!profile)}
             />
           </div>
@@ -235,8 +242,8 @@ export const Navbar = (props) => {
       )}
       {profile && (
         <ProfileCard
-          name={userDetails?.displayName}
-          image={userDetails?.photoURL}
+          name={data.displayName}
+          image={data.photoURL}
           setProfile={setProfile}
         />
       )}

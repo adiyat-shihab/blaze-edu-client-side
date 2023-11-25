@@ -27,7 +27,18 @@ export const AuthContext = ({ children }) => {
   };
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUserDetails(currentUser);
+      if (currentUser) {
+        setUserDetails(currentUser);
+        const userStore = {
+          displayName: currentUser.displayName,
+          email: currentUser.email,
+          photoURL: currentUser.photoURL,
+        };
+        localStorage.setItem("UserDetails", JSON.stringify(userStore));
+      } else {
+        setUserDetails(null);
+        localStorage.removeItem("UserDetails");
+      }
     });
     return () => {
       unSubscribe();

@@ -1,16 +1,23 @@
-import { Avatar, Button, Space, Table, Tag } from "antd";
-import { useQuery } from "@tanstack/react-query";
+import { Avatar, Button, Table } from "antd";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import { Link } from "react-router-dom";
 
 export const AllUsers = () => {
   const axiosOpen = useAxiosOpen();
+  const queryClient = useQueryClient();
   const { Column } = Table;
   const { data } = useQuery({
     queryKey: ["allUsers"],
     queryFn: async () => {
       return await axiosOpen.get("/users");
+    },
+  });
+  const mutation = useMutation({
+    mutationFn: ({ email }) => {
+      return axiosOpen.put(`/admin/make/${email}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["allUsers"] });
     },
   });
 
@@ -36,14 +43,18 @@ export const AllUsers = () => {
           title="Role"
           dataIndex="role"
           key="role"
-          render={(role) => {
+          render={(value, record, index) => {
             return (
               <>
                 {" "}
-                {role === "admin" ? (
+                {record.role === "admin" ? (
                   <Button disabled>Already Admin</Button>
                 ) : (
-                  <Button>Make Admin</Button>
+                  <Button
+                    onClick={() => mutation.mutate({ email: record.email })}
+                  >
+                    Make Admin
+                  </Button>
                 )}
               </>
             );

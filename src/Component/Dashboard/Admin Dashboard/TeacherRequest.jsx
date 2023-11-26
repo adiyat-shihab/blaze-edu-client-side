@@ -1,11 +1,6 @@
 import { Avatar, Button, ConfigProvider, Table, Tooltip } from "antd";
 import useAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 
 export const TeacherRequest = () => {
@@ -14,23 +9,18 @@ export const TeacherRequest = () => {
   const queryClient = useQueryClient();
   const { Column } = Table;
   const { data } = useQuery({
-    queryKey: ["allUsers"],
+    queryKey: ["teacherRequest"],
     queryFn: async () => {
       return await axiosOpen.get("/teacher/request");
     },
   });
 
-  const handleAccept = (email) => {
-    console.log(email);
-    mutation.mutate(email);
-  };
-
   const mutation = useMutation({
-    mutationFn: (put) => {
-      return axiosOpen.put(`/teacher/accept/${put}`);
+    mutationFn: ({ email, status }) => {
+      return axiosOpen.put(`/teacher/accept/${email}`, { status });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["allUsers"] });
+      queryClient.invalidateQueries({ queryKey: ["teacherRequest"] });
     },
   });
 
@@ -70,45 +60,63 @@ export const TeacherRequest = () => {
             render={(value, record, index) => {
               return (
                 <div className={" flex gap-4"}>
-                  <Tooltip title={"Accept"}>
-                    <ConfigProvider
-                      theme={{
-                        token: {
-                          colorPrimary: "white",
-                          colorBgContainer: "green",
-                        },
-                      }}
-                    >
-                      <Button
-                        className={"bg-green-500 hover:text-white text-white"}
-                        onClick={() => handleAccept(record?.teacherEmail)}
-                        icon={<CheckCircleOutlined />}
-                      ></Button>
-                    </ConfigProvider>
-                  </Tooltip>
+                  <ConfigProvider
+                    theme={{
+                      token: {
+                        colorPrimary: "white",
+                        colorBgContainer: "green",
+                      },
+                    }}
+                  >
+                    <Tooltip title={"Accept"}>
+                      {record?.status === "pending" ? (
+                        <Button
+                          className={"bg-green-500 hover:text-white text-white"}
+                          onClick={() =>
+                            mutation.mutate({
+                              email: record?.teacherEmail,
+                              status: "approve",
+                            })
+                          }
+                          icon={<CheckCircleOutlined />}
+                        ></Button>
+                      ) : (
+                        <Button
+                          icon={<CheckCircleOutlined />}
+                          disabled
+                        ></Button>
+                      )}
+                    </Tooltip>
+                  </ConfigProvider>
 
-                  <Tooltip title={"Reject"}>
-                    <ConfigProvider
-                      theme={{
-                        token: {
-                          colorPrimary: "white",
-                          colorBgContainer: "green",
-                        },
-                      }}
-                    >
-                      {record?.status === "approve" ? (
+                  <ConfigProvider
+                    theme={{
+                      token: {
+                        colorPrimary: "white",
+                        colorBgContainer: "green",
+                      },
+                    }}
+                  >
+                    <Tooltip title={"Reject"}>
+                      {record?.status === "pending" ? (
+                        <Button
+                          onClick={() =>
+                            mutation.mutate({
+                              email: record?.teacherEmail,
+                              status: "reject",
+                            })
+                          }
+                          className={"bg-red-500 hover:text-white text-white"}
+                          icon={<CloseCircleOutlined />}
+                        ></Button>
+                      ) : (
                         <Button
                           icon={<CloseCircleOutlined />}
                           disabled
                         ></Button>
-                      ) : (
-                        <Button
-                          className={"bg-red-500 hover:text-white text-white"}
-                          icon={<CloseCircleOutlined />}
-                        ></Button>
                       )}
-                    </ConfigProvider>
-                  </Tooltip>
+                    </Tooltip>
+                  </ConfigProvider>
                 </div>
               );
             }}

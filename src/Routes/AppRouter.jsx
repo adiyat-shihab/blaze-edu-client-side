@@ -8,7 +8,7 @@ import { DashBoard } from "../Page/DashBoard.jsx";
 import { TeacherRequest } from "../Component/Dashboard/Admin Dashboard/TeacherRequest.jsx";
 import { UserProfile } from "../Component/Dashboard/UserProfile.jsx";
 import { AllUsers } from "../Component/Dashboard/Admin Dashboard/AllUsers.jsx";
-import { AllClasses } from "../Component/Dashboard/Admin Dashboard/AllClasses.jsx";
+import { ClassRequest } from "../Component/Dashboard/Admin Dashboard/ClassRequest.jsx";
 import { MyClasses } from "../Component/Dashboard/Teacher Dashboard/MyClasses.jsx";
 import { AddClasses } from "../Component/Dashboard/Teacher Dashboard/AddClasses.jsx";
 import { MyEnrollClass } from "../Component/Dashboard/Student Dashboard/MyEnrollClass.jsx";
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/dashboard/all/classes",
-            element: <AllClasses />,
+            element: <ClassRequest />,
           },
           //   Teacher Route
           {

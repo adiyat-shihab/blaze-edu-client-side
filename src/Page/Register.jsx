@@ -21,7 +21,6 @@ export const Register = () => {
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
-  console.log(phoneNumber);
 
   const customRequest = async ({ file, onSuccess, onError }) => {
     const image = { image: file };
@@ -36,7 +35,6 @@ export const Register = () => {
       },
     );
 
-    // Check if the upload was successful
     if (response.data.success) {
       setImage(response.data.data.display_url);
       message.success("Image uploaded successfully");

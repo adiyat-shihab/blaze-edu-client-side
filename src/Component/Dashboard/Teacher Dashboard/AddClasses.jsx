@@ -3,9 +3,13 @@ import { Button, message, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useState } from "react";
+import { UseAuth } from "../../../Hooks/UseAuth.jsx";
+import useAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
 
 export const AddClasses = () => {
   const [fileList, setFileList] = useState([]);
+  const axiosOpen = useAxiosOpen();
+  const { data } = UseAuth();
   const [image, setImage] = useState("");
   const { register, handleSubmit } = useForm();
 
@@ -36,7 +40,18 @@ export const AddClasses = () => {
     }
   };
 
-  const onSubmit = (data) => console.log(data, image);
+  const onSubmit = (form) => {
+    const classes = {
+      email: data?.data?.email,
+      name: data?.data?.name,
+      photo: image,
+      title: form.title,
+      price: form.price,
+      description: form.description,
+    };
+    console.log(classes);
+    axiosOpen.post("/class/add", classes).then((res) => console.log(res));
+  };
   return (
     <>
       <div className=" py-16 p-6  flex items-center justify-center">
@@ -80,7 +95,7 @@ export const AddClasses = () => {
                         className="h-10 border outline-none mt-1 rounded px-4 w-full bg-gray-50"
                         placeholder="$ "
                         required
-                        {...register("number", { required: true })}
+                        {...register("price", { required: true })}
                       />
                     </div>
                     <div className="md:col-span-5 ">
@@ -118,7 +133,7 @@ export const AddClasses = () => {
                           <input
                             className="bg-blue-500 cursor-pointer hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                             type="submit"
-                            value={"Submit"}
+                            value={"Add Class"}
                           />
                         ) : (
                           <div className={"flex justify-center"}>
@@ -126,7 +141,7 @@ export const AddClasses = () => {
                               disabled
                               className=" h-10 -mt-5  w-full max-w-xs mx-auto  focus:bg-indigo-700  rounded-lg font-semibold"
                             >
-                              Submit
+                              Add Class
                             </Button>
                           </div>
                         )}

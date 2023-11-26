@@ -41,7 +41,7 @@ export const Navbar = () => {
         <ul className="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto  lg:items-center lg:w-auto lg:space-x-6">
           <NavLink
             to={"/"}
-            className={"text-gray-300"}
+            className={"text-gray-300 "}
             style={({ isActive }) => {
               return {
                 color: isActive ? "#FF7426" : "#afafaf",

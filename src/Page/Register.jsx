@@ -58,7 +58,7 @@ export const Register = () => {
       };
       await axiosOpen.post("/user/add", setuser).then((res) => {
         message.success("Sign Up Successful");
-        navigate("/");
+        navigate("/dashboard");
       });
     });
   };

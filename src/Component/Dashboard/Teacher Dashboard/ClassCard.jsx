@@ -4,12 +4,76 @@ import {
   EditFilled,
   MailOutlined,
   SwapRightOutlined,
+  UploadOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Tooltip } from "antd";
+import { Button, message, Modal, Tooltip, Upload } from "antd";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import UseAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const ClassCard = ({ item }) => {
-  console.log(item);
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [fileList, setFileList] = useState([]);
+  const [image, setImage] = useState("");
+  const queryClient = useQueryClient();
+
+  const { register, handleSubmit } = useForm();
+  const axiosOpen = UseAxiosOpen();
+
+  const onChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
+
+  const customRequest = async ({ file, onSuccess, onError }) => {
+    const image = { image: file };
+
+    const response = await axios.post(
+      "https://api.imgbb.com/1/upload?key=0ebb240c8ce479a4159793d2a4acc3f4",
+      image,
+      {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      },
+    );
+
+    if (response.data.success) {
+      setImage(response.data.data.display_url);
+      message.success("Image uploaded successfully");
+      onSuccess();
+    } else {
+      message.error("Error uploading image");
+      onError();
+    }
+  };
+
+  const mutation1 = useMutation({
+    mutationFn: ([id, data]) => {
+      return axiosOpen.put(`/class/modify/${id}`, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["myClasses"] });
+    },
+  });
+  const mutation2 = useMutation({
+    mutationFn: (id) => {
+      return axiosOpen.delete(`/class/delete/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["myClasses"] });
+    },
+  });
+  const onSubmit = (data) => {
+    data.photo = image;
+    console.log(data);
+    mutation1.mutate([item?._id, data]);
+    setOpen(false);
+  };
+
   return (
     <>
       <div>
@@ -25,14 +89,20 @@ export const ClassCard = ({ item }) => {
                   <div className="flex cursor-pointer bg-white px-4 py-1 space-x-5 rounded-lg overflow-hidden shadow">
                     <Tooltip title={"Edit"}>
                       {" "}
-                      <p className="flex hover:bg-gray-100 items-center p-1 rounded ">
+                      <p
+                        onClick={() => setOpen(true)}
+                        className="flex hover:bg-gray-100 items-center p-1 rounded "
+                      >
                         <EditFilled className={"text-green-500"} />
                       </p>
                     </Tooltip>
 
                     <Tooltip title={"Delete"}>
                       {" "}
-                      <p className="flex items-center hover:bg-gray-100 p-1 rounded ">
+                      <p
+                        onClick={() => mutation2.mutate(item?._id)}
+                        className="flex items-center hover:bg-gray-100 p-1 rounded "
+                      >
                         <DeleteFilled className={"text-red-500"} />
                       </p>
                     </Tooltip>
@@ -79,8 +149,22 @@ export const ClassCard = ({ item }) => {
 
               <div className="grid grid-cols-2 ">
                 <div className="flex gap-2 items-center">
-                  <button className={"text-blue-500"}>See Details</button>
-                  <SwapRightOutlined className={"text-blue-500"} />
+                  {item?.status === "approve" ? (
+                    <>
+                      <Button
+                        icon={<SwapRightOutlined />}
+                        className={"text-blue-500"}
+                      >
+                        See Details
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button disabled icon={<SwapRightOutlined />}>
+                        See Details
+                      </Button>
+                    </>
+                  )}
                 </div>
 
                 <div className="flex justify-end">
@@ -93,6 +177,77 @@ export const ClassCard = ({ item }) => {
             </div>
           </div>
         </div>
+        <Modal
+          title="Update Details"
+          footer={null}
+          open={open}
+          confirmLoading={confirmLoading}
+          onCancel={() => setOpen(false)}
+        >
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="mt-8 grid lg:grid-cols-2 gap-4">
+              <div>
+                <label className="text-sm text-gray-700 block mb-1 font-medium">
+                  Title
+                </label>
+                <input
+                  type="text"
+                  className="bg-gray-100 outline-none border border-gray-200 rounded py-1 px-3 block  text-gray-700 w-full"
+                  {...register("title", { required: true })}
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="text-sm text-gray-700 block mb-1 font-medium">
+                  Price
+                </label>
+                <input
+                  type="number"
+                  {...register("price", { required: true })}
+                  required
+                  className="bg-gray-100 outline-none border border-gray-200 rounded py-1 px-3 block  text-gray-700 w-full"
+                />
+              </div>
+              <div>
+                <label className="text-sm text-gray-700 block mb-1 font-medium">
+                  Description
+                </label>
+                <textarea
+                  className="bg-gray-100 outline-none border border-gray-200 rounded py-1 px-3 block  text-gray-700 w-full"
+                  {...register("description", { required: true })}
+                  required
+                />
+              </div>
+
+              <div className="w-full px-3 mb-12">
+                <label className="text-xs font-semibold px-1">Update</label>
+                <div className="flex">
+                  <Upload
+                    customRequest={customRequest}
+                    disabled={fileList.length === 1}
+                    onChange={onChange}
+                    fileList={fileList}
+                    listType="picture"
+                    maxCount="1"
+                  >
+                    <Button icon={<UploadOutlined />}>Upload Image</Button>
+                  </Upload>
+                </div>
+                <div className={"flex gap-2 mt-10 -mb-10 justify-end"}>
+                  <Button onClick={() => setOpen(false)}>Cancel</Button>
+                  {image ? (
+                    <Button>
+                      <input type="submit" className={"cursor-pointer"} />
+                    </Button>
+                  ) : (
+                    <Button disabled>submit</Button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </form>
+        </Modal>
       </div>
     </>
   );

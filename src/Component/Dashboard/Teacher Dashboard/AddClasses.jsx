@@ -53,6 +53,7 @@ export const AddClasses = () => {
     console.log(classes);
     axiosOpen.post("/class/add", classes).then((res) => console.log(res));
   };
+
   return (
     <>
       <div className=" py-16 p-6  flex items-center justify-center">

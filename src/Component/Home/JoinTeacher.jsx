@@ -14,13 +14,15 @@ export const JoinTeacher = () => {
           alt=""
           width="800"
         />
-        <div className={"space-y-16"}>
+        <div className={"space-y-10"}>
           <h1 className={"text-6xl font-bold text-[#FF7426]"}>
             Join As A Teacher
           </h1>
-          <p>
-            Instructors from around the world teach millions of learners on
-            Udemy. We provide the tools and skills to teach what you love.
+          <p
+            className={"text-[1.225rem] text-[#8A8A8A] font-medium leading-9 "}
+          >
+            Instructors from around the world teach millions of learners <br />{" "}
+            on Udemy. We provide the tools and skills to teach what you love.
           </p>
           <ConfigProvider
             theme={{

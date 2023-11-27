@@ -17,10 +17,12 @@ import { SingleClass } from "../Component/Dashboard/Student Dashboard/SingleClas
 import { PrivateRoute } from "./PrivateRoute.jsx";
 import { EnrollClassDetails } from "../Component/Dashboard/Student Dashboard/EnrollClassDetails.jsx";
 import { ClassAssignment } from "../Component/Dashboard/Teacher Dashboard/ClassAssignment.jsx";
+import { ErrorElement } from "../Page/ErrorElement.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorElement />,
     children: [
       {
         path: "/",

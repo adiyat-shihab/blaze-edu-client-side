@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -20,7 +20,7 @@ export const SingleClass = () => {
       return await axiosSecure.get(`/student/class/single/${param?.id}`);
     },
   });
-
+  const navigate = useNavigate();
   const handleEnrollment = (classData) => {
     const sendingData = {};
     sendingData.class_id = classData._id;
@@ -35,6 +35,9 @@ export const SingleClass = () => {
   const mutation = useMutation({
     mutationFn: (classData) => {
       return axiosSecure.post(`/student/enrollment`, classData);
+    },
+    onSuccess: () => {
+      navigate("/dashboard/student/class");
     },
   });
 

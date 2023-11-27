@@ -3,6 +3,8 @@ import useAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
+import Swale from "sweetalert2";
+import Swal from "sweetalert2";
 
 export const TeacherRequest = () => {
   const axiosSecure = useAxiosPrivate();
@@ -21,6 +23,10 @@ export const TeacherRequest = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["teacherRequest"] });
+      Swal.fire({
+        title: "Success!",
+        icon: "success",
+      });
     },
   });
 
@@ -72,12 +78,24 @@ export const TeacherRequest = () => {
                       {record?.status === "pending" ? (
                         <Button
                           className={"bg-green-500 hover:text-white text-white"}
-                          onClick={() =>
-                            mutation.mutate({
-                              email: record?.teacherEmail,
-                              status: "approve",
-                            })
-                          }
+                          onClick={() => {
+                            Swal.fire({
+                              title: "Are you sure?",
+
+                              icon: "warning",
+                              showCancelButton: true,
+                              confirmButtonColor: "#3085d6",
+                              cancelButtonColor: "#d33",
+                              confirmButtonText: "Yes",
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                mutation.mutate({
+                                  email: record?.teacherEmail,
+                                  status: "approve",
+                                });
+                              }
+                            });
+                          }}
                           icon={<CheckCircleOutlined />}
                         ></Button>
                       ) : (
@@ -100,12 +118,23 @@ export const TeacherRequest = () => {
                     <Tooltip title={"Reject"}>
                       {record?.status === "pending" ? (
                         <Button
-                          onClick={() =>
-                            mutation.mutate({
-                              email: record?.teacherEmail,
-                              status: "reject",
-                            })
-                          }
+                          onClick={() => {
+                            Swal.fire({
+                              title: "Are you sure?",
+                              icon: "warning",
+                              showCancelButton: true,
+                              confirmButtonColor: "#3085d6",
+                              cancelButtonColor: "#d33",
+                              confirmButtonText: "Yes",
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                mutation.mutate({
+                                  email: record?.teacherEmail,
+                                  status: "reject",
+                                });
+                              }
+                            });
+                          }}
                           className={"bg-red-500 hover:text-white text-white"}
                           icon={<CloseCircleOutlined />}
                         ></Button>

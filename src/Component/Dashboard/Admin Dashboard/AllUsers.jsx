@@ -2,6 +2,7 @@ import { Avatar, Button, Table } from "antd";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
 import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
+import Swal from "sweetalert2";
 
 export const AllUsers = () => {
   const axiosOpen = useAxiosOpen();
@@ -20,6 +21,11 @@ export const AllUsers = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["allUsers"] });
+      Swal.fire({
+        title: "Success!",
+        text: "This person is now admin",
+        icon: "success",
+      });
     },
   });
 
@@ -53,7 +59,21 @@ export const AllUsers = () => {
                   <Button disabled>Already Admin</Button>
                 ) : (
                   <Button
-                    onClick={() => mutation.mutate({ email: record.email })}
+                    onClick={() => {
+                      Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't be able to revert this!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          mutation.mutate({ email: record.email });
+                        }
+                      });
+                    }}
                   >
                     Make Admin
                   </Button>

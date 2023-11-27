@@ -4,6 +4,7 @@ import { Button, ConfigProvider, Table, Tooltip } from "antd";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
+import Swal from "sweetalert2";
 
 export const ClassRequest = () => {
   const axiosSecure = useAxiosPrivate();
@@ -22,6 +23,10 @@ export const ClassRequest = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["adminClassList"] });
+      Swal.fire({
+        title: "Success!",
+        icon: "success",
+      });
     },
   });
 
@@ -86,7 +91,22 @@ export const ClassRequest = () => {
                     className={"bg-green-500 hover:text-white text-white"}
                     icon={<CheckCircleOutlined />}
                     onClick={() => {
-                      mutation.mutate({ id: record._id, status: "approve" });
+                      Swal.fire({
+                        title: "Are you sure?",
+
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          mutation.mutate({
+                            id: record._id,
+                            status: "approve",
+                          });
+                        }
+                      });
                     }}
                   ></Button>
                 ) : (
@@ -106,6 +126,24 @@ export const ClassRequest = () => {
               <Tooltip title={"Reject"}>
                 {record?.status === "pending" ? (
                   <Button
+                    onClick={() => {
+                      Swal.fire({
+                        title: "Are you sure?",
+
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          mutation.mutate({
+                            id: record._id,
+                            status: "reject",
+                          });
+                        }
+                      });
+                    }}
                     className={"bg-red-500 hover:text-white text-white"}
                     icon={<CloseCircleOutlined />}
                   ></Button>

@@ -15,7 +15,7 @@ export const MyClasses = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
+      <div className="grid grid-cols-1 py-24 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 w-full">
         {data?.data?.map((item) => (
           <ClassCard key={item._id} item={item} />
         ))}

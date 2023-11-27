@@ -1,27 +1,27 @@
-import useAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Helmet } from "react-helmet";
 import { Button, ConfigProvider, Table, Tooltip } from "antd";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
 
 export const ClassRequest = () => {
-  const axiosOpen = useAxiosOpen();
+  const axiosSecure = useAxiosPrivate();
   const queryClient = useQueryClient();
   const { data } = useQuery({
     queryKey: ["adminClassList"],
     queryFn: async () => {
-      return await axiosOpen.get("/admin/all/class");
+      return await axiosSecure.get("/admin/all/class");
     },
   });
 
   const mutation = useMutation({
     mutationFn: ({ id, status }) => {
       console.log(id, status);
-      return axiosOpen.put(`/admin/approve/${id}`, { status });
+      return axiosSecure.put(`/admin/approve/${id}`, { status });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["allUsers"] });
+      queryClient.invalidateQueries({ queryKey: ["adminClassList"] });
     },
   });
 
@@ -70,7 +70,7 @@ export const ClassRequest = () => {
     {
       render: (record) => {
         return (
-          <>
+          <div>
             <ConfigProvider
               theme={{
                 token: {
@@ -114,21 +114,21 @@ export const ClassRequest = () => {
                 )}
               </Tooltip>
             </ConfigProvider>
-          </>
+          </div>
         );
       },
     },
   ];
   return (
     <>
-      <div>
+      <div className={"h-[80vh]"}>
         <Helmet>
           <title>Class Request</title>
         </Helmet>
-        <div className={"  "}>
+        <div className={" "}>
           <Table
             dataSource={data?.data}
-            className={"cursor-pointer font-medium "}
+            className={"cursor-pointer overflow-x-auto  font-medium "}
             columns={columns}
             scroll={{ x: true }}
             responsive={["sm"]}

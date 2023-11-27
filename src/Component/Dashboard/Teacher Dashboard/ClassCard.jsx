@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import UseAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 export const ClassCard = ({ item }) => {
   const [open, setOpen] = useState(false);
@@ -151,12 +152,17 @@ export const ClassCard = ({ item }) => {
                 <div className="flex gap-2 items-center">
                   {item?.status === "approve" ? (
                     <>
-                      <Button
-                        icon={<SwapRightOutlined />}
-                        className={"text-blue-500"}
+                      <Link
+                        to={`/dashboard/teacher/class/assignment/${item?._id}`}
                       >
-                        See Details
-                      </Button>
+                        {" "}
+                        <Button
+                          icon={<SwapRightOutlined />}
+                          className={"text-blue-500"}
+                        >
+                          See Details
+                        </Button>
+                      </Link>
                     </>
                   ) : (
                     <>

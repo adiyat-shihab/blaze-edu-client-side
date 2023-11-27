@@ -12,6 +12,11 @@ import { ClassRequest } from "../Component/Dashboard/Admin Dashboard/ClassReques
 import { MyClasses } from "../Component/Dashboard/Teacher Dashboard/MyClasses.jsx";
 import { AddClasses } from "../Component/Dashboard/Teacher Dashboard/AddClasses.jsx";
 import { MyEnrollClass } from "../Component/Dashboard/Student Dashboard/MyEnrollClass.jsx";
+import { AllClass } from "../Page/AllClass.jsx";
+import { SingleClass } from "../Component/Dashboard/Student Dashboard/SingleClass.jsx";
+import { PrivateRoute } from "./PrivateRoute.jsx";
+import { EnrollClassDetails } from "../Component/Dashboard/Student Dashboard/EnrollClassDetails.jsx";
+import { ClassAssignment } from "../Component/Dashboard/Teacher Dashboard/ClassAssignment.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -31,7 +36,24 @@ const router = createBrowserRouter([
       },
       {
         path: "/teacher/apply",
-        element: <ApplyTeacher />,
+        element: (
+          <PrivateRoute>
+            {" "}
+            <ApplyTeacher />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/all/class",
+        element: <AllClass />,
+      },
+      {
+        path: "/single/class/:id",
+        element: (
+          <PrivateRoute>
+            <SingleClass />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard",
@@ -39,34 +61,80 @@ const router = createBrowserRouter([
         children: [
           {
             path: "/dashboard",
-            element: <UserProfile />,
+            element: (
+              <PrivateRoute>
+                <UserProfile />
+              </PrivateRoute>
+            ),
           },
           //   Admin  route
           {
             path: "/dashboard/teacher/request",
-            element: <TeacherRequest />,
+            element: (
+              <PrivateRoute>
+                {" "}
+                <TeacherRequest />
+              </PrivateRoute>
+            ),
           },
           {
             path: "/dashboard/users",
-            element: <AllUsers />,
+            element: (
+              <PrivateRoute>
+                <AllUsers />
+              </PrivateRoute>
+            ),
           },
           {
             path: "/dashboard/all/classes",
-            element: <ClassRequest />,
+            element: (
+              <PrivateRoute>
+                <ClassRequest />
+              </PrivateRoute>
+            ),
           },
           //   Teacher Route
           {
             path: "/dashboard/teacher/my/classes",
-            element: <MyClasses />,
+            element: (
+              <PrivateRoute>
+                <MyClasses />
+              </PrivateRoute>
+            ),
           },
           {
             path: "/dashboard/teacher/class/add",
-            element: <AddClasses />,
+            element: (
+              <PrivateRoute>
+                <AddClasses />
+              </PrivateRoute>
+            ),
           },
           //    Student Route
           {
             path: "/dashboard/student/class",
-            element: <MyEnrollClass />,
+            element: (
+              <PrivateRoute>
+                {" "}
+                <MyEnrollClass />
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "/dashboard/enroll/class/details/:id",
+            element: (
+              <PrivateRoute>
+                <EnrollClassDetails />
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "/dashboard/teacher/class/assignment/:id",
+            element: (
+              <PrivateRoute>
+                <ClassAssignment />
+              </PrivateRoute>
+            ),
           },
         ],
       },

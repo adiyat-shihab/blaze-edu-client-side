@@ -9,7 +9,7 @@ export const UserProfile = () => {
     <>
       <div>
         <h1 className={"font-bold text-3xl"}>My Profile</h1>
-        <div className={"flex gap-[61px] mt-16"}>
+        <div className={"flex py-24 gap-[61px] mt-16"}>
           <LazyLoadImage
             effect={"blur"}
             className={"w-[150px] rounded-full "}

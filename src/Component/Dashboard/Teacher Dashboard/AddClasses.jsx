@@ -49,6 +49,7 @@ export const AddClasses = () => {
       price: form.price,
       description: form.description,
       status: "pending",
+      enrollCount: 0,
     };
     console.log(classes);
     axiosOpen.post("/class/add", classes).then((res) => console.log(res));

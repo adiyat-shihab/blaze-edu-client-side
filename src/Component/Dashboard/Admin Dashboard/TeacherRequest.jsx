@@ -2,22 +2,22 @@ import { Avatar, Button, ConfigProvider, Table, Tooltip } from "antd";
 import useAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
 
 export const TeacherRequest = () => {
-  const axiosOpen = useAxiosOpen();
-
+  const axiosSecure = useAxiosPrivate();
   const queryClient = useQueryClient();
   const { Column } = Table;
   const { data } = useQuery({
     queryKey: ["teacherRequest"],
     queryFn: async () => {
-      return await axiosOpen.get("/teacher/request");
+      return await axiosSecure.get("/teacher/request");
     },
   });
 
   const mutation = useMutation({
     mutationFn: ({ email, status }) => {
-      return axiosOpen.put(`/teacher/accept/${email}`, { status });
+      return axiosSecure.put(`/teacher/accept/${email}`, { status });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["teacherRequest"] });
@@ -26,7 +26,7 @@ export const TeacherRequest = () => {
 
   return (
     <>
-      <div>
+      <div className={"h-[80vh]"}>
         <Table dataSource={data?.data}>
           <Column
             title="Photo"

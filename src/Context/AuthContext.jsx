@@ -12,8 +12,10 @@ import useAxiosOpen from "../Hooks/UseAxiosOpen.jsx";
 export const authContext = createContext(null);
 export const AuthContext = ({ children }) => {
   const [userDetails, setUserDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
   const axiosOpen = useAxiosOpen();
   const SignUp = (email, password, name, photo) => {
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password).then(
       async (r) =>
         await updateProfile(auth.currentUser, {
@@ -23,9 +25,11 @@ export const AuthContext = ({ children }) => {
     );
   };
   const Signin = (email, password) => {
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
   const SignOut = () => {
+    setLoading(true);
     return signOut(auth);
   };
 
@@ -40,8 +44,18 @@ export const AuthContext = ({ children }) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUserDetails(currentUser);
+
+        const userInfo = { email: currentUser.email };
+        axiosOpen.post("/jwt", userInfo).then((res) => {
+          if (res.data.token) {
+            localStorage.setItem("access-token", res.data.token);
+            setLoading(false);
+          }
+        });
       } else {
+        localStorage.removeItem("access-token");
         setUserDetails(null);
+        setLoading(false);
       }
     });
     return () => {
@@ -50,7 +64,7 @@ export const AuthContext = ({ children }) => {
   }, []);
   return (
     <authContext.Provider
-      value={{ SignUp, Signin, userDetails, SignOut, data }}
+      value={{ SignUp, Signin, userDetails, loading, SignOut, data }}
     >
       {children}
     </authContext.Provider>

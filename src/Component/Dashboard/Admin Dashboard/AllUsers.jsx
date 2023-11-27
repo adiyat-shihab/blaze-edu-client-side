@@ -1,15 +1,17 @@
 import { Avatar, Button, Table } from "antd";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
+import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
 
 export const AllUsers = () => {
   const axiosOpen = useAxiosOpen();
   const queryClient = useQueryClient();
+  const axiosSecure = useAxiosPrivate();
   const { Column } = Table;
   const { data } = useQuery({
     queryKey: ["allUsers"],
     queryFn: async () => {
-      return await axiosOpen.get("/users");
+      return await axiosSecure.get("/users");
     },
   });
   const mutation = useMutation({
@@ -24,7 +26,7 @@ export const AllUsers = () => {
   return (
     <>
       {" "}
-      <Table dataSource={data?.data}>
+      <Table className={"h-[80vh]"} dataSource={data?.data}>
         <Column
           title="Photo"
           dataIndex="photo"

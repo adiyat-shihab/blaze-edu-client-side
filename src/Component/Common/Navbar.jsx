@@ -51,6 +51,7 @@ export const Navbar = () => {
           >
             Home
           </NavLink>
+
           <li className="text-gray-300">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -63,41 +64,18 @@ export const Navbar = () => {
             </svg>
           </li>
           <li>
-            <a className="text-sm text-blue-600 font-bold" href="#">
-              About Us
-            </a>
-          </li>
-          <li className="text-gray-300">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              stroke="currentColor"
-              className="w-4 h-4 current-fill"
-              viewBox="0 0 24 24"
+            <NavLink
+              to={"/all/class"}
+              className={"text-gray-300 "}
+              style={({ isActive }) => {
+                return {
+                  color: isActive ? "#FF7426" : "#afafaf",
+                  fontWeight: isActive && "bold",
+                };
+              }}
             >
-              <path d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-            </svg>
-          </li>
-          <li>
-            <a className="text-sm text-gray-400 hover:text-gray-500" href="#">
-              Services
-            </a>
-          </li>
-          <li className="text-gray-300">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              stroke="currentColor"
-              className="w-4 h-4 current-fill"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-            </svg>
-          </li>
-          <li>
-            <a className="text-sm text-gray-400 hover:text-gray-500" href="#">
-              Pricing
-            </a>
+              All Class
+            </NavLink>
           </li>
 
           {data?.data?.role === "admin" || data?.data?.role === "teacher" || (

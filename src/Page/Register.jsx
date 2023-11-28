@@ -10,9 +10,11 @@ import { Helmet } from "react-helmet";
 import useAxiosOpen from "../Hooks/UseAxiosOpen.jsx";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const Register = () => {
   const { SignUp, userDetails } = UseAuth();
+  const queryClient = useQueryClient();
   const axiosOpen = useAxiosOpen();
   const [fileList, setFileList] = useState([]);
   const [image, setImage] = useState("");
@@ -49,19 +51,27 @@ export const Register = () => {
   const onSubmit = async (data) => {
     await SignUp(data.email, data.password, data.name, image).then(async () => {
       const setuser = {
-        email: data.email,
+        email: data.email.toLowerCase(),
         password: data.password,
         name: data.name,
         photo: image,
         phone: phoneNumber,
         role: "student",
       };
-      await axiosOpen.post("/user/add", setuser).then((res) => {
-        message.success("Sign Up Successful");
-        navigate("/dashboard");
-      });
+      mutation.mutate(setuser);
     });
   };
+
+  const mutation = useMutation({
+    mutationFn: async (userData) => {
+      await axiosOpen.post("/user/add", userData);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["Role"] });
+      message.success("Sign Up Successful");
+      navigate("/dashboard");
+    },
+  });
 
   return (
     <div className={""}>

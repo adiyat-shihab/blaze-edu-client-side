@@ -18,18 +18,21 @@ export const ClassRequestDetails = () => {
       <div>
         {data?.data.length ? (
           data?.data.map((data) => (
-            <Card style={{ width: 300 }}>
-              <div className={"flex gap-2 items-center"}>
-                <Avatar src={data.student_photo} />
-                <h2>{data.student_name}</h2>
-              </div>
-              <p className={"mt-4 bg-gray-100  italic p-3"}>
-                "{data.student_feedback}"
-                <p className={"flex justify-end mt-2"}>
-                  <Rate disabled value={data.rating} />
+            <div className={"gird grid-cols-2"}>
+              {" "}
+              <Card style={{ width: 300 }}>
+                <div className={"flex gap-2 items-center"}>
+                  <Avatar src={data.student_photo} />
+                  <h2>{data.student_name}</h2>
+                </div>
+                <p className={"mt-4 bg-gray-100  italic p-3"}>
+                  "{data.student_feedback}"
+                  <p className={"flex justify-end mt-2"}>
+                    <Rate disabled value={data.rating} />
+                  </p>
                 </p>
-              </p>
-            </Card>
+              </Card>
+            </div>
           ))
         ) : (
           <div className={"my-52"}>

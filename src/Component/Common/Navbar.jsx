@@ -78,7 +78,7 @@ export const Navbar = () => {
             </NavLink>
           </li>
 
-          {data?.data?.role === "admin" || data?.data?.role === "teacher" || (
+          {data?.data?.role === "admin" || (
             <div className={"flex items-center gap-4"}>
               <li className="text-gray-300">
                 <svg

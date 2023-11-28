@@ -4,7 +4,7 @@ import { ProfileDetails } from "../../Utils/ProfileDetails.jsx";
 
 export const UserProfile = () => {
   const { data } = UseAuth();
-  console.log(data);
+
   return (
     <>
       <div>

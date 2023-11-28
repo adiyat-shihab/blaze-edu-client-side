@@ -6,6 +6,7 @@ import UseAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
 import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
 import { UseAuth } from "../../../Hooks/UseAuth.jsx";
 import { Button, message } from "antd";
+import Swal from "sweetalert2";
 
 export const SingleClass = () => {
   const axiosSecure = useAxiosPrivate();
@@ -37,6 +38,10 @@ export const SingleClass = () => {
       return axiosSecure.post(`/student/enrollment`, classData);
     },
     onSuccess: () => {
+      Swal.fire({
+        icon: "success",
+        title: "Class Enrollment Succeed",
+      });
       navigate("/dashboard/student/class");
     },
   });

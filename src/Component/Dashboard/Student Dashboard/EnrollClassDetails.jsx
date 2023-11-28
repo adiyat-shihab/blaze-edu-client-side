@@ -89,6 +89,24 @@ export const EnrollClassDetails = () => {
       title: "Description",
       dataIndex: "description",
       key: "address",
+      render: (description) => {
+        return (
+          <>
+            <Tooltip title={description}>
+              <p
+                style={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  maxWidth: "400px",
+                }}
+              >
+                {description}
+              </p>
+            </Tooltip>
+          </>
+        );
+      },
     },
     {
       render: (record) => {

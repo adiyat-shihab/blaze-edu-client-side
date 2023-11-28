@@ -5,6 +5,7 @@ import axios from "axios";
 import { useState } from "react";
 import { UseAuth } from "../../../Hooks/UseAuth.jsx";
 import useAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
+import Swal from "sweetalert2";
 
 export const AddClasses = () => {
   const [fileList, setFileList] = useState([]);
@@ -49,10 +50,15 @@ export const AddClasses = () => {
       price: form.price,
       description: form.description,
       status: "pending",
-      enrollCount: 0,
+      enrollCount: "0",
     };
     console.log(classes);
-    axiosOpen.post("/class/add", classes).then((res) => console.log(res));
+    axiosOpen.post("/class/add", classes).then((res) =>
+      Swal.fire({
+        icon: "success",
+        title: "Class Added Successfully",
+      }),
+    );
   };
 
   return (

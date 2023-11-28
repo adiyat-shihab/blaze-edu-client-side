@@ -57,6 +57,24 @@ export const ClassRequest = () => {
       title: "Course Description",
       dataIndex: "description",
       key: "description",
+      render: (description) => {
+        return (
+          <>
+            <Tooltip title={description}>
+              <p
+                style={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  maxWidth: "400px",
+                }}
+              >
+                {description}
+              </p>
+            </Tooltip>
+          </>
+        );
+      },
     },
     {
       title: "Status",

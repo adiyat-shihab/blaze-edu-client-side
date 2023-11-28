@@ -14,6 +14,8 @@ import axios from "axios";
 import UseAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
 
 export const ClassCard = ({ item }) => {
   const [open, setOpen] = useState(false);
@@ -21,6 +23,7 @@ export const ClassCard = ({ item }) => {
   const [fileList, setFileList] = useState([]);
   const [image, setImage] = useState("");
   const queryClient = useQueryClient();
+  const axiosSecure = useAxiosPrivate();
 
   const { register, handleSubmit } = useForm();
   const axiosOpen = UseAxiosOpen();
@@ -58,21 +61,40 @@ export const ClassCard = ({ item }) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["myClasses"] });
+      Swal.fire({
+        icon: "success",
+        title: "Class Updated Successfully",
+      });
     },
   });
   const mutation2 = useMutation({
     mutationFn: (id) => {
-      return axiosOpen.delete(`/class/delete/${id}`);
+      return axiosSecure.delete(`/class/delete/${id}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["myClasses"] });
+      Swal.fire({
+        icon: "success",
+        title: "Class Deleted Successfully",
+      });
     },
   });
   const onSubmit = (data) => {
     data.photo = image;
     console.log(data);
-    mutation1.mutate([item?._id, data]);
-    setOpen(false);
+    Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        mutation1.mutate([item?._id, data]);
+        setOpen(false);
+      }
+    });
   };
 
   return (
@@ -101,7 +123,21 @@ export const ClassCard = ({ item }) => {
                     <Tooltip title={"Delete"}>
                       {" "}
                       <p
-                        onClick={() => mutation2.mutate(item?._id)}
+                        onClick={() => {
+                          Swal.fire({
+                            title: "Are you sure?",
+                            text: "You won't be able to revert this!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, delete it!",
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              mutation2.mutate(item?._id);
+                            }
+                          });
+                        }}
                         className="flex items-center hover:bg-gray-100 p-1 rounded "
                       >
                         <DeleteFilled className={"text-red-500"} />

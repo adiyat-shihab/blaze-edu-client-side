@@ -1,10 +1,11 @@
-import { useParams } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
-import { Button, Table } from "antd";
+import { Button, Input, Modal, Rate, Table, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { UseAuth } from "../../../Hooks/UseAuth.jsx";
 import Swal from "sweetalert2";
+import TextArea from "antd/es/input/TextArea.js";
 
 export const EnrollClassDetails = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -32,6 +33,44 @@ export const EnrollClassDetails = () => {
       return axiosSecure.post(`/student/assignment/submit`, data);
     },
   });
+  const mutationFeedback = useMutation({
+    mutationFn: (data) => {
+      return axiosSecure.post(`/student/feedback`, data);
+    },
+  });
+
+  const { data: feedBack } = useQuery({
+    queryKey: ["feedback"],
+    queryFn: async () => {
+      return await axiosSecure.get(`/student/class/single/${param.id}`);
+    },
+  });
+
+  const handleFeedbackMutate = () => {
+    const data = {};
+    data.student_email = userDetails.email;
+    data.student_feedback = feedback;
+    data.class_id = param.id;
+    data.rating = rating;
+    data.class_title = feedBack.data.title;
+    data.student_photo = userDetails.photoURL;
+    mutationFeedback.mutate(data);
+    if (mutationFeedback.data?.data?.message) {
+      Swal.fire({
+        icon: "success",
+        title: mutationFeedback.data?.data?.message,
+      });
+    } else if (mutationFeedback.data?.data) {
+      Swal.fire({
+        icon: "success",
+        title: "Feedback Send Successfully",
+      });
+    }
+  };
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [feedback, setFeedback] = useState("");
+  const [rating, setRating] = useState(0);
 
   const columns = [
     {
@@ -94,8 +133,22 @@ export const EnrollClassDetails = () => {
     },
   ];
   return (
-    <>
+    <div>
+      <div className={"flex justify-end"}>
+        <Tooltip title={"Teaching Evaluation Report"}>
+          <Button onClick={() => setIsOpen(true)}>TER</Button>
+        </Tooltip>
+      </div>
       <Table dataSource={data?.data} columns={columns} />
-    </>
+      <Modal open={isOpen} footer={null} onCancel={() => setIsOpen(false)}>
+        <form className={"px-8 space-y-6"}>
+          <h1 className={"text-xl font-bold"}>Teacher Evolution Part</h1>
+          <p>Enter Your Feedback</p>
+          <TextArea onChange={(e) => setFeedback(e.target.value)} />
+          <Rate onChange={setRating} value={rating} /> <br />
+          <Button onClick={handleFeedbackMutate}>Submit</Button>
+        </form>
+      </Modal>
+    </div>
   );
 };

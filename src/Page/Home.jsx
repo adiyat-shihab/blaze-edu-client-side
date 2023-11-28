@@ -6,6 +6,7 @@ import { Partners } from "../Component/Home/Partners.jsx";
 import { JoinTeacher } from "../Component/Home/JoinTeacher.jsx";
 import { Banner } from "../Component/Home/Banner.jsx";
 import { CourseSection } from "../Component/Home/CourseSection.jsx";
+import { Feedback } from "../Component/Home/Feedback.jsx";
 
 export const Home = () => {
   return (
@@ -17,6 +18,7 @@ export const Home = () => {
       <CourseSection />
       <LearningExperience />
       <Partners />
+      <Feedback />
       <JoinTeacher />
     </div>
   );

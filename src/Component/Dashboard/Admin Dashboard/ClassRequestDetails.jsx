@@ -15,7 +15,7 @@ export const ClassRequestDetails = () => {
   console.log(data);
   return (
     <>
-      <div>
+      <div className={"py-32"}>
         {data?.data.length ? (
           data?.data.map((data) => (
             <div className={"gird grid-cols-2"}>

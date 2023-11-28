@@ -12,11 +12,15 @@ import useAxiosOpen from "../Hooks/UseAxiosOpen.jsx";
 export const Login = () => {
   const { Signin } = UseAuth();
   const navigate = useNavigate();
+  const [validate, setValidate] = useState(false);
   const onSubmit = async (data) => {
-    await Signin(data.email, data.password).then((res) => {
-      message.success("Login Successfully");
-      return navigate("/");
-    });
+    setValidate(false);
+    await Signin(data.email, data.password)
+      .then((res) => {
+        message.success("Login Successfully");
+        return navigate("/");
+      })
+      .catch((err) => setValidate(true));
   };
   const { register, handleSubmit } = useForm();
 
@@ -108,6 +112,11 @@ export const Login = () => {
                         )}
                       </div>
                     </div>
+                  </div>
+                  <div className={"-mt-2 mb-3"}>
+                    <strong className={"text-red-400"}>
+                      {validate ? "Invalid Password / Invalid Email" : ""}
+                    </strong>
                   </div>
 
                   <div className="flex -mx-3">

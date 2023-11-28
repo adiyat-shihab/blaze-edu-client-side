@@ -37,8 +37,23 @@ export const CourseSection = () => {
             Learn From most of our student like
           </p>
         </div>
-        <div className={"px-24 relative pb-32"}>
-          <Swiper spaceBetween={50} slidesPerView={4}>
+        <div className={"lg:px-24 cursor-pointer px-12 relative pb-32"}>
+          <Swiper
+            spaceBetween={50}
+            slidesPerView={4}
+            breakpoints={{
+              465: {
+                slidesPerView: 1,
+              },
+
+              768: {
+                slidesPerView: 2,
+              },
+              1024: {
+                slidesPerView: 3,
+              },
+            }}
+          >
             {data?.data?.map((item) => (
               <SwiperSlide key={item.id}>
                 <CourseSectionData data={item} />

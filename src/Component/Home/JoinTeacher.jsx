@@ -6,7 +6,9 @@ export const JoinTeacher = () => {
   return (
     <>
       <div
-        className={"flex flex-col lg:flex-row items-center py-16 gap-20 px-36"}
+        className={
+          "flex flex-col lg:flex-row items-center py-16 px-6 gap-20 xl:px-36"
+        }
       >
         <LazyLoadImage
           effect="blur"
@@ -15,11 +17,13 @@ export const JoinTeacher = () => {
           width="800"
         />
         <div className={"space-y-10"}>
-          <h1 className={"text-6xl font-bold text-[#FF7426]"}>
+          <h1 className={"xl:text-6xl text-4xl font-bold text-[#FF7426]"}>
             Join As A Teacher
           </h1>
           <p
-            className={"text-[1.225rem] text-[#8A8A8A] font-medium leading-9 "}
+            className={
+              " text-[1rem] xl:text-[1.225rem] text-[#8A8A8A] font-medium leading-9 "
+            }
           >
             Instructors from around the world teach millions of learners <br />{" "}
             on Blaze Edu. We provide the tools and skills to teach what you

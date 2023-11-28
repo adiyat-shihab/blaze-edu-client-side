@@ -46,7 +46,7 @@ export const Feedback = () => {
           <div className={""}>
             {" "}
             <Card
-              title={`Class Name : ${data.class_title}`}
+              title={`Course Name : ${data.class_title}`}
               style={{ width: 300 }}
               className={"shadow-lg"}
             >

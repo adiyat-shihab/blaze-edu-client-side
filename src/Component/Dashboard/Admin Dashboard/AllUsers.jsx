@@ -1,17 +1,18 @@
 import { Avatar, Button, Table } from "antd";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import useAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
 import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
 import Swal from "sweetalert2";
+import Search from "antd/es/input/Search.js";
+import { useState } from "react";
 
 export const AllUsers = () => {
   const queryClient = useQueryClient();
   const axiosSecure = useAxiosPrivate();
   const { Column } = Table;
-  const { data } = useQuery({
+  const query = useQuery({
     queryKey: ["allUsers"],
     queryFn: async () => {
-      return await axiosSecure.get("/users");
+      return await axiosSecure.get("/users").then((res) => setData(res));
     },
   });
   const mutation = useMutation({
@@ -27,10 +28,25 @@ export const AllUsers = () => {
       });
     },
   });
+  const [data, setData] = useState();
+  const onSearch = (value, _e, info) => {
+    axiosSecure.get(`/admin/search/user?query=${value}`).then((res) => {
+      setData(res);
+    });
+  };
 
   return (
     <>
       {" "}
+      <div>
+        <div className={"flex max-w-sm ml-auto mt-10 pr-6 justify-end"}>
+          <Search
+            placeholder="input search text"
+            onSearch={onSearch}
+            enterButton={<Button>Search</Button>}
+          />
+        </div>
+      </div>
       <Table className={"h-[80vh]"} dataSource={data?.data}>
         <Column
           title="Photo"

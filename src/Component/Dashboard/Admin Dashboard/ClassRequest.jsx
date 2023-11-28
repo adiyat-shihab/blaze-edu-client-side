@@ -185,7 +185,7 @@ export const ClassRequest = () => {
   ];
   return (
     <>
-      <div className={"h-[80vh]"}>
+      <div className={"pb-32"}>
         <Helmet>
           <title>Class Request</title>
         </Helmet>

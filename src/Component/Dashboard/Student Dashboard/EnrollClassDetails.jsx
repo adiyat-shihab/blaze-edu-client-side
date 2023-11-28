@@ -37,6 +37,12 @@ export const EnrollClassDetails = () => {
     mutationFn: (data) => {
       return axiosSecure.post(`/student/feedback`, data);
     },
+    onSuccess: () => {
+      Swal.fire({
+        icon: "success",
+        title: "Feedback Send Successfully",
+      });
+    },
   });
 
   const { data: feedBack } = useQuery({
@@ -54,16 +60,12 @@ export const EnrollClassDetails = () => {
     data.rating = rating;
     data.class_title = feedBack.data.title;
     data.student_photo = userDetails.photoURL;
+    data.student_name = userDetails.displayName;
     mutationFeedback.mutate(data);
     if (mutationFeedback.data?.data?.message) {
       Swal.fire({
         icon: "success",
         title: mutationFeedback.data?.data?.message,
-      });
-    } else if (mutationFeedback.data?.data) {
-      Swal.fire({
-        icon: "success",
-        title: "Feedback Send Successfully",
       });
     }
   };

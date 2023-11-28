@@ -6,7 +6,7 @@ export const Footer = () => {
     <>
       <footer className="bg-[#FDF8EE] dark:bg-gray-900 ">
         <div className="mx-auto  p-4 py-6 xl:pl-[12.25rem] xl:pr-[15.5rem] lg:py-8">
-          <div className="md:flex    md:justify-between">
+          <div className="lg:flex    lg:justify-between">
             <div className="mb-6 md:mb-0">
               <Logo />
               <p className="md:w-[19.875rem] mt-[2.12rem] text-gray-500 dark:text-gray-400 font-medium ">

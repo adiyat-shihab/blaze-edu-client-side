@@ -2,14 +2,16 @@ import useAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
 import { useQuery } from "@tanstack/react-query";
 import { UseAuth } from "../../../Hooks/UseAuth.jsx";
 import { ClassCard } from "./ClassCard.jsx";
+import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
 
 export const MyClasses = () => {
   const { userDetails } = UseAuth();
   const axiosOpen = useAxiosOpen();
+  const axiosSecure = useAxiosPrivate();
   const { data } = useQuery({
     queryKey: ["myClasses", userDetails?.email],
     queryFn: async () => {
-      return await axiosOpen.get(`/class/${userDetails?.email}`);
+      return await axiosSecure.get(`/class/${userDetails?.email}`);
     },
   });
 

@@ -6,10 +6,12 @@ import { useState } from "react";
 import { UseAuth } from "../../../Hooks/UseAuth.jsx";
 import useAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
 import Swal from "sweetalert2";
+import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
 
 export const AddClasses = () => {
   const [fileList, setFileList] = useState([]);
   const axiosOpen = useAxiosOpen();
+  const axiosSecure = useAxiosPrivate();
   const { data } = UseAuth();
   const [image, setImage] = useState("");
   const { register, handleSubmit } = useForm();
@@ -53,7 +55,7 @@ export const AddClasses = () => {
       enrollCount: "0",
     };
     console.log(classes);
-    axiosOpen.post("/class/add", classes).then((res) =>
+    axiosSecure.post("/class/add", classes).then((res) =>
       Swal.fire({
         icon: "success",
         title: "Class Added Successfully",

@@ -57,7 +57,7 @@ export const ClassCard = ({ item }) => {
 
   const mutation1 = useMutation({
     mutationFn: ([id, data]) => {
-      return axiosOpen.put(`/class/modify/${id}`, data);
+      return axiosSecure.put(`/class/modify/${id}`, data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["myClasses"] });

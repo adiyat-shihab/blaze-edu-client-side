@@ -5,6 +5,7 @@ import { LearningExperience } from "../Component/Home/LearningExperience.jsx";
 import { Partners } from "../Component/Home/Partners.jsx";
 import { JoinTeacher } from "../Component/Home/JoinTeacher.jsx";
 import { Banner } from "../Component/Home/Banner.jsx";
+import { CourseSection } from "../Component/Home/CourseSection.jsx";
 
 export const Home = () => {
   return (
@@ -13,7 +14,7 @@ export const Home = () => {
         <title>Home</title>
       </Helmet>
       <Banner />
-
+      <CourseSection />
       <LearningExperience />
       <Partners />
       <JoinTeacher />

@@ -22,7 +22,8 @@ export const JoinTeacher = () => {
             className={"text-[1.225rem] text-[#8A8A8A] font-medium leading-9 "}
           >
             Instructors from around the world teach millions of learners <br />{" "}
-            on Udemy. We provide the tools and skills to teach what you love.
+            on Blaze Edu. We provide the tools and skills to teach what you
+            love.
           </p>
           <ConfigProvider
             theme={{

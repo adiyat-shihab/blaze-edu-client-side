@@ -5,7 +5,6 @@ import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
 import Swal from "sweetalert2";
 
 export const AllUsers = () => {
-  const axiosOpen = useAxiosOpen();
   const queryClient = useQueryClient();
   const axiosSecure = useAxiosPrivate();
   const { Column } = Table;
@@ -17,7 +16,7 @@ export const AllUsers = () => {
   });
   const mutation = useMutation({
     mutationFn: ({ email }) => {
-      return axiosOpen.put(`/admin/make/${email}`);
+      return axiosSecure.put(`/admin/make/${email}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["allUsers"] });

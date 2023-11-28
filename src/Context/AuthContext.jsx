@@ -5,6 +5,8 @@ import {
   onAuthStateChanged,
   signOut,
   signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from "firebase/auth";
 import { auth } from "../../firebase.config.js";
 import { useQuery } from "@tanstack/react-query";
@@ -24,6 +26,8 @@ export const AuthContext = ({ children }) => {
         }),
     );
   };
+
+  const provider = new GoogleAuthProvider();
   const Signin = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
@@ -39,6 +43,10 @@ export const AuthContext = ({ children }) => {
       return await axiosOpen.get(`/user/${queryKey[1]}`);
     },
   });
+
+  const googleSign = () => {
+    return signInWithPopup(auth, provider);
+  };
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -64,7 +72,15 @@ export const AuthContext = ({ children }) => {
   }, []);
   return (
     <authContext.Provider
-      value={{ SignUp, Signin, userDetails, loading, SignOut, data }}
+      value={{
+        SignUp,
+        Signin,
+        googleSign,
+        userDetails,
+        loading,
+        SignOut,
+        data,
+      }}
     >
       {children}
     </authContext.Provider>

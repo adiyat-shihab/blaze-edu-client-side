@@ -18,6 +18,7 @@ import { PrivateRoute } from "./PrivateRoute.jsx";
 import { EnrollClassDetails } from "../Component/Dashboard/Student Dashboard/EnrollClassDetails.jsx";
 import { ClassAssignment } from "../Component/Dashboard/Teacher Dashboard/ClassAssignment.jsx";
 import { ErrorElement } from "../Page/ErrorElement.jsx";
+import { ClassRequestDetails } from "../Component/Dashboard/Admin Dashboard/ClassRequestDetails.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -92,6 +93,14 @@ const router = createBrowserRouter([
             element: (
               <PrivateRoute>
                 <ClassRequest />
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "/dashboard/class/request/:id",
+            element: (
+              <PrivateRoute>
+                <ClassRequestDetails />
               </PrivateRoute>
             ),
           },

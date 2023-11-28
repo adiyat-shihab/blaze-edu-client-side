@@ -5,6 +5,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 export const ClassRequest = () => {
   const axiosSecure = useAxiosPrivate();
@@ -18,7 +19,6 @@ export const ClassRequest = () => {
 
   const mutation = useMutation({
     mutationFn: ({ id, status }) => {
-      console.log(id, status);
       return axiosSecure.put(`/admin/approve/${id}`, { status });
     },
     onSuccess: () => {
@@ -64,10 +64,18 @@ export const ClassRequest = () => {
     },
     {
       title: "Progressing",
-      render: () => {
+      render: (record) => {
+        console.log(record._id);
         return (
           <>
-            <Button>See Progress</Button>
+            {record?.status === "approve" ? (
+              <Link to={`/dashboard/class/request/${record._id}`}>
+                {" "}
+                <Button>See Progress</Button>
+              </Link>
+            ) : (
+              <Button disabled>See Progress</Button>
+            )}
           </>
         );
       },

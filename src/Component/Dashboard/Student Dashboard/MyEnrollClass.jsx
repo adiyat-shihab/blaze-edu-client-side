@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { UseAuth } from "../../../Hooks/UseAuth.jsx";
 import { AllClass } from "../../../Page/AllClass.jsx";
 import { StudentEnrollCard } from "./StudentEnrollCard.jsx";
+import { Empty } from "antd";
 
 export const MyEnrollClass = () => {
   const { userDetails } = UseAuth();
@@ -16,10 +17,18 @@ export const MyEnrollClass = () => {
   console.log(dataTwo);
   return (
     <>
-      <div className={"grid gap-16 py-24 grid-cols-3"}>
-        {dataTwo?.data?.map((card) => (
-          <StudentEnrollCard item={card} key={card._id} />
-        ))}
+      <div>
+        {dataTwo?.data.length ? (
+          <div className={"grid gap-16 py-24 grid-cols-3"}>
+            {dataTwo?.data?.map((card) => (
+              <StudentEnrollCard item={card} key={card._id} />
+            ))}
+          </div>
+        ) : (
+          <div className={"py-32"}>
+            <Empty description={"No Class Found"} className={"mt-32"} />
+          </div>
+        )}
       </div>
     </>
   );

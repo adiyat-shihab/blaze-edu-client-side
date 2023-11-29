@@ -12,7 +12,6 @@ export const ClassRequestDetails = () => {
       return await axiosSecure.get(`/get/student/feedback/${param.id}`);
     },
   });
-  console.log(data);
   return (
     <>
       <div className={"py-32"}>

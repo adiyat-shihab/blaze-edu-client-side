@@ -83,7 +83,6 @@ export const ClassRequest = () => {
     {
       title: "Progressing",
       render: (record) => {
-        console.log(record._id);
         return (
           <>
             {record?.status === "approve" ? (

@@ -25,7 +25,7 @@ export const ApplyTeacher = () => {
       return await axiosSecure.get(`/teacher/request/${userDetails?.email}`);
     },
   });
-  console.log(statusCheck);
+
   const handleExperienced = (value) => {
     setExperience(value);
   };

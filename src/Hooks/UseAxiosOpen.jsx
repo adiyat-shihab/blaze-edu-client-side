@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosOpen = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://blaze-edu-server.vercel.app",
 });
 
 const useAxiosOpen = () => {

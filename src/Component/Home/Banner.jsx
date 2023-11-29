@@ -9,7 +9,7 @@ export const Banner = () => {
     <>
       <div
         className={
-          "lg:px-[12rem] z-0  relative px-6 py-6  lg:py-44 gap-20 bg-[#FDF8EE] flex flex-col  md:flex-row justify-between items-center  "
+          "xl:px-[12rem] z-0 lg:px-24  relative px-6 py-6  lg:py-44 gap-20 bg-[#FDF8EE] flex flex-col  md:flex-row justify-between items-center  "
         }
         style={containerStyle}
       >
@@ -23,7 +23,7 @@ export const Banner = () => {
             For <span className={"text-[#FF7426]"}>Future</span>
           </h1>
           <p className={"text-[#8A8A8A] text-xl lg:text-[1.25rem] font-medium"}>
-            Elearn is a global training provider based across the UK that
+            Blaze Edu is a global training provider based across the UK that
             specialises in accredited and bespoke training courses. We crush{" "}
             the...
           </p>
@@ -36,7 +36,7 @@ export const Banner = () => {
       </div>
       <div
         className={
-          "lg:mx-[15.25rem] relative px-6 mx-3 my-6  lg:-mt-[7.15rem] z-50  flex flex-col lg:flex-row py-[4.38rem] gap-[3.3rem] rounded-[0.875rem] bg-[#4D2C5E] lg:px-[2.5rem]"
+          "xl:mx-[15.25rem] relative px-6 mx-3 my-6  lg:-mt-[7.15rem] z-50  flex flex-col lg:flex-row py-[4.38rem] gap-[3.3rem] rounded-[0.875rem] bg-[#4D2C5E] lg:px-[2.5rem]"
         }
       >
         <Outline

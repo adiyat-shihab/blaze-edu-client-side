@@ -10,9 +10,8 @@ export const Footer = () => {
             <div className="mb-6 md:mb-0">
               <Logo />
               <p className="md:w-[19.875rem] mt-[2.12rem] text-gray-500 dark:text-gray-400 font-medium ">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy a
-                type specimen book.
+                Explore boundless educational opportunities with Blaze Edu,
+                where learning meets innovation.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-8  sm:flex sm:justify-between   sm:space-x-9">

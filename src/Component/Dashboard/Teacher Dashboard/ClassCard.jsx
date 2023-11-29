@@ -81,7 +81,6 @@ export const ClassCard = ({ item }) => {
   });
   const onSubmit = (data) => {
     data.photo = image;
-    console.log(data);
     Swal.fire({
       title: "Are you sure?",
       icon: "warning",

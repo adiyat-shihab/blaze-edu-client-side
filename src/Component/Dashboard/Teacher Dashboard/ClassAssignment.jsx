@@ -18,7 +18,7 @@ import Swal from "sweetalert2";
 export const ClassAssignment = () => {
   const param = useParams();
   const axiosSecure = useAxiosPrivate();
-  console.log(param);
+
   const [isOpen, setIsOpen] = useState(false);
   const queryClient = useQueryClient();
 
@@ -34,7 +34,6 @@ export const ClassAssignment = () => {
       return await axiosSecure.get(`/teacher/assignment/result/${param.id}`);
     },
   });
-  console.log(dataResult?.data);
   const [date, setDate] = useState();
   const onChange = (date, dateString) => {
     setDate(dateString);
@@ -57,7 +56,6 @@ export const ClassAssignment = () => {
   const handleSubmit = (data) => {
     data.date = date;
     data.class_id = param.id;
-    console.log(data);
     mutation.mutate(data);
   };
 

@@ -54,7 +54,6 @@ export const AddClasses = () => {
       status: "pending",
       enrollCount: "0",
     };
-    console.log(classes);
     axiosSecure.post("/class/add", classes).then((res) =>
       Swal.fire({
         icon: "success",

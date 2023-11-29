@@ -3,16 +3,20 @@ import { Button, ConfigProvider } from "antd";
 import { Link } from "react-router-dom";
 
 export const JoinTeacher = () => {
+  const containerStyle = {
+    backgroundImage: 'url("https://i.ibb.co/rMLnD8B/Group-327.png")',
+  };
   return (
     <>
       <div
         className={
-          "flex flex-col lg:flex-row items-center py-16 px-6 gap-20 xl:px-36"
+          "flex flex-col bg-[#FDF8EE]  lg:flex-row items-center py-28 px-6 gap-20 xl:px-36"
         }
+        style={containerStyle}
       >
         <LazyLoadImage
           effect="blur"
-          src="https://i.ibb.co/3z0NbQD/Untitled-design-7.png"
+          src="https://i.ibb.co/1zf19JP/teacher-2.png"
           alt=""
           width="800"
         />

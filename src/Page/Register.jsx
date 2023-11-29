@@ -99,7 +99,7 @@ export const Register = () => {
   });
   const [see, setSee] = useState(false);
   const [phoneValidate, setPhoneValidate] = useState("");
-  console.log(mutation);
+
   return (
     <div className={""}>
       <Helmet>

@@ -14,7 +14,6 @@ export const MyEnrollClass = () => {
       return await axiosSecure.get(`/student/enrollment/${userDetails?.email}`);
     },
   });
-  console.log(dataTwo);
   return (
     <>
       <div>

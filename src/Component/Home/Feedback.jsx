@@ -12,7 +12,6 @@ export const Feedback = () => {
       return data;
     },
   });
-  console.log(data);
   return (
     <div className={"relative py-32"}>
       {" "}

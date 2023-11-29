@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from "react-router-dom";
 import {
   BookOutlined,
+  CaretRightOutlined,
   ContactsOutlined,
   FolderAddOutlined,
   TeamOutlined,
@@ -12,6 +13,7 @@ import useAxiosOpen from "../Hooks/UseAxiosOpen.jsx";
 import { UseAuth } from "../Hooks/UseAuth.jsx";
 import { Button, Drawer } from "antd";
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 
 export const DashBoard = () => {
   const axiosOpen = useAxiosOpen();
@@ -141,12 +143,17 @@ export const DashBoard = () => {
                 <div className="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
                   <div>
                     {" "}
-                    <Button className={"md:hidden"} onClick={showDrawer}>
-                      Open
+                    <Button
+                      className={
+                        "md:hidden bg-[#FF7426] text-white rounded-full "
+                      }
+                      onClick={showDrawer}
+                    >
+                      <CaretRightOutlined />
                     </Button>
                     <Drawer
                       title="Basic Drawer"
-                      placement="right"
+                      placement="left"
                       onClose={onClose}
                       open={open}
                     >

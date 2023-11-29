@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
+import { useAxiosSecure } from "../../../Hooks/useAxiosSecure.jsx";
 import {
   Button,
   Card,
@@ -14,10 +14,11 @@ import {
 import { useState } from "react";
 import TextArea from "antd/es/input/TextArea.js";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 export const ClassAssignment = () => {
   const param = useParams();
-  const axiosSecure = useAxiosPrivate();
+  const axiosSecure = useAxiosSecure();
 
   const [isOpen, setIsOpen] = useState(false);
   const queryClient = useQueryClient();
@@ -78,6 +79,9 @@ export const ClassAssignment = () => {
   ];
   return (
     <div className={""}>
+      <Helmet>
+        <title>Dashboard | Assignment</title>
+      </Helmet>
       <div
         className={"flex flex-row items-center lg:gap-20 justify-center py-10"}
       >

@@ -4,11 +4,12 @@ import { ClassAllCard } from "../Component/Dashboard/Student Dashboard/ClassAllC
 import Search from "antd/es/input/Search.js";
 import { Button } from "antd";
 import { useState } from "react";
-import { useAxiosPrivate } from "../Hooks/useAxiosPrivate.jsx";
+import { useAxiosSecure } from "../Hooks/useAxiosSecure.jsx";
+import { Helmet } from "react-helmet";
 
 export const AllClass = () => {
   const axiosOpen = useAxiosOpen();
-  const axiosSecure = useAxiosPrivate();
+  const axiosSecure = useAxiosSecure();
   const query = useQuery({
     queryKey: ["getClass"],
     queryFn: async () => {
@@ -27,6 +28,9 @@ export const AllClass = () => {
 
   return (
     <>
+      <Helmet>
+        <title>All Class</title>
+      </Helmet>
       <div className={"flex max-w-sm ml-auto mt-10 pr-6 justify-end"}>
         <Search
           placeholder="input search text"

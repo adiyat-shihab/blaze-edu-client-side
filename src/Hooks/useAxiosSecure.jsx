@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { UseAuth } from "./UseAuth.jsx";
 
 const axiosSecure = axios.create({
-  baseURL: "https://blaze-edu-server.vercel.app",
+  baseURL: "https://b8a12-server-side-adiyat-shihab.vercel.app",
 });
-export const useAxiosPrivate = () => {
+export const useAxiosSecure = () => {
   const navigate = useNavigate();
   const { SignOut } = UseAuth();
   axiosSecure.interceptors.request.use(

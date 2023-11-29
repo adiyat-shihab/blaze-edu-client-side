@@ -3,12 +3,12 @@ import { Helmet } from "react-helmet";
 import { Button, ConfigProvider, Table, Tooltip } from "antd";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
-import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
+import { useAxiosSecure } from "../../../Hooks/useAxiosSecure.jsx";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
 export const ClassRequest = () => {
-  const axiosSecure = useAxiosPrivate();
+  const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
   const { data } = useQuery({
     queryKey: ["adminClassList"],

@@ -3,13 +3,14 @@ import useAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import UseAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
-import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
+import { useAxiosSecure } from "../../../Hooks/useAxiosSecure.jsx";
 import { UseAuth } from "../../../Hooks/UseAuth.jsx";
 import { Button, message } from "antd";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 export const SingleClass = () => {
-  const axiosSecure = useAxiosPrivate();
+  const axiosSecure = useAxiosSecure();
 
   const { userDetails } = UseAuth();
 
@@ -49,6 +50,9 @@ export const SingleClass = () => {
   return (
     <>
       {" "}
+      <Helmet>
+        <title>Single Class</title>
+      </Helmet>
       <section className="text-gray-700 py-16 body-font overflow-hidden bg-white">
         <div className="container px-5 py-24 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">

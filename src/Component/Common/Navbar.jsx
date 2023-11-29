@@ -3,12 +3,12 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link, NavLink } from "react-router-dom";
 import { UseAuth } from "../../Hooks/UseAuth.jsx";
 import { ProfileCard } from "./ProfileCard.jsx";
-import { Avatar } from "antd";
+import { Avatar, Button, message } from "antd";
 
 export const Navbar = () => {
   const [toggleButton, setToggleButton] = useState(false);
   const [profile, setProfile] = useState(false);
-  const { userDetails, data } = UseAuth();
+  const { userDetails, data, SignOut } = UseAuth();
 
   return (
     <>
@@ -132,12 +132,13 @@ export const Navbar = () => {
           <div className="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
           <nav className="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
             <div className="flex items-center mb-8">
-              <a className="mr-auto text-3xl font-bold leading-none" href="#">
+              <div className="mr-auto text-3xl font-bold leading-none">
                 <LazyLoadImage
                   src={"https://i.ibb.co/48ZN6dN/Group.png"}
                   effect={"blur"}
                 ></LazyLoadImage>
-              </a>
+                <h1>Blaze Edu</h1>
+              </div>
               <button
                 onClick={() => setToggleButton(false)}
                 className="navbar-close"
@@ -156,62 +157,71 @@ export const Navbar = () => {
             <div>
               <ul>
                 <li className="mb-1">
-                  <a
-                    className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                    href="#"
+                  <NavLink
+                    to={"/"}
+                    className={"text-gray-300 "}
+                    style={({ isActive }) => {
+                      return {
+                        color: isActive ? "#FF7426" : "#afafaf",
+                        fontWeight: isActive && "bold",
+                      };
+                    }}
                   >
                     Home
-                  </a>
+                  </NavLink>
                 </li>
                 <li className="mb-1">
-                  <a
-                    className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                    href="#"
+                  <NavLink
+                    to={"/all/class"}
+                    className={"text-gray-300 "}
+                    style={({ isActive }) => {
+                      return {
+                        color: isActive ? "#FF7426" : "#afafaf",
+                        fontWeight: isActive && "bold",
+                      };
+                    }}
                   >
-                    About Us
-                  </a>
+                    All Class
+                  </NavLink>
                 </li>
-                <li className="mb-1">
-                  <a
-                    className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                    href="#"
-                  >
-                    Services
-                  </a>
-                </li>
-                <li className="mb-1">
-                  <a
-                    className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                    href="#"
-                  >
-                    Pricing
-                  </a>
-                </li>
-                <li className="mb-1">
-                  <a
-                    className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                    href="#"
-                  >
-                    Contact
-                  </a>
-                </li>
+                {data?.data?.role === "admin" || (
+                  <div className={"flex items-center gap-4"}>
+                    <li>
+                      <NavLink
+                        to={"/teacher/apply"}
+                        className="text-sm text-gray-400 hover:text-gray-500"
+                        style={({ isActive }) => {
+                          return {
+                            color: isActive ? "#FF7426" : "#afafaf",
+                            fontWeight: isActive && "bold",
+                          };
+                        }}
+                      >
+                        Tech On Blaze edu
+                      </NavLink>
+                    </li>
+                  </div>
+                )}
               </ul>
             </div>
             <div className="mt-auto">
-              <div className="pt-6">
-                <a
-                  className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold  bg-gray-50 hover:bg-gray-100 rounded-xl"
-                  href="#"
+              {userDetails ? (
+                <Button
+                  onClick={() =>
+                    SignOut().then((res) => {
+                      setProfile(false);
+                      message.success("Sign out ");
+                    })
+                  }
+                  className=" w-full py-2 lg:inline-block px-6 bg-[#FF7426] hover:bg-[#ff5e00] text-sm text-white font-bold rounded-xl transition duration-200"
                 >
-                  Sign in
-                </a>
-                <a
-                  className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
-                  href="#"
-                >
-                  Sign Up
-                </a>
-              </div>
+                  Sign Out
+                </Button>
+              ) : (
+                <button className=" w-full py-2 lg:inline-block px-6 bg-[#FF7426] hover:bg-[#ff5e00] text-sm text-white font-bold rounded-xl transition duration-200">
+                  <Link to={"/Register"}>Sign Up</Link>
+                </button>
+              )}
               <p className="my-4 text-xs text-center text-gray-400">
                 <span>Copyright © 2021</span>
               </p>

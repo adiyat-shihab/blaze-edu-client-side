@@ -6,12 +6,13 @@ import { useState } from "react";
 import { UseAuth } from "../../../Hooks/UseAuth.jsx";
 import useAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
 import Swal from "sweetalert2";
-import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
+import { useAxiosSecure } from "../../../Hooks/useAxiosSecure.jsx";
+import { Helmet } from "react-helmet";
 
 export const AddClasses = () => {
   const [fileList, setFileList] = useState([]);
   const axiosOpen = useAxiosOpen();
-  const axiosSecure = useAxiosPrivate();
+  const axiosSecure = useAxiosSecure();
   const { data } = UseAuth();
   const [image, setImage] = useState("");
   const { register, handleSubmit } = useForm();
@@ -64,6 +65,9 @@ export const AddClasses = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Dashboard | Class Add</title>
+      </Helmet>
       <div className=" py-16 p-6  flex items-center justify-center">
         <div className="container max-w-screen-lg mx-auto">
           <div>

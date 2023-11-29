@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
+import { useAxiosSecure } from "../../../Hooks/useAxiosSecure.jsx";
 import { Avatar, Card, Empty, Rate } from "antd";
+import { Helmet } from "react-helmet";
 
 export const ClassRequestDetails = () => {
   const param = useParams();
-  const axiosSecure = useAxiosPrivate();
+  const axiosSecure = useAxiosSecure();
   const { data } = useQuery({
     queryKey: ["classRequestDetails", param.id],
     queryFn: async () => {
@@ -14,6 +15,9 @@ export const ClassRequestDetails = () => {
   });
   return (
     <>
+      <Helmet>
+        <title>Dashboard | Class Details</title>
+      </Helmet>
       <div className={"py-32"}>
         {data?.data.length ? (
           data?.data.map((data) => (

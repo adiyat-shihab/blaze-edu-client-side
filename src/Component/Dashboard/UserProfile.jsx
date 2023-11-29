@@ -1,12 +1,16 @@
 import { UseAuth } from "../../Hooks/UseAuth.jsx";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { ProfileDetails } from "../../Utils/ProfileDetails.jsx";
+import { Helmet } from "react-helmet";
 
 export const UserProfile = () => {
   const { data } = UseAuth();
 
   return (
     <>
+      <Helmet>
+        <title>Dashboard | Profile</title>
+      </Helmet>
       <div>
         <h1 className={"font-bold text-3xl"}>My Profile</h1>
         <div className={"flex py-24 gap-[61px] mt-16"}>

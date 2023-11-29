@@ -1,16 +1,17 @@
 import { useLoaderData, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
+import { useAxiosSecure } from "../../../Hooks/useAxiosSecure.jsx";
 import { Button, Input, Modal, Rate, Table, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { UseAuth } from "../../../Hooks/UseAuth.jsx";
 import Swal from "sweetalert2";
 import TextArea from "antd/es/input/TextArea.js";
+import { Helmet } from "react-helmet";
 
 export const EnrollClassDetails = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const param = useParams();
-  const axiosSecure = useAxiosPrivate();
+  const axiosSecure = useAxiosSecure();
   const { userDetails } = UseAuth();
 
   useEffect(() => {
@@ -154,6 +155,9 @@ export const EnrollClassDetails = () => {
   ];
   return (
     <div>
+      <Helmet>
+        <title>Dashboard | Enroll Details</title>
+      </Helmet>
       <div className={"flex justify-end"}>
         <Tooltip title={"Teaching Evaluation Report"}>
           <Button onClick={() => setIsOpen(true)}>TER</Button>

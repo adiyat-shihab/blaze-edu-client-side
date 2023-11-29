@@ -2,12 +2,13 @@ import { Avatar, Button, ConfigProvider, Table, Tooltip } from "antd";
 import useAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
-import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
+import { useAxiosSecure } from "../../../Hooks/useAxiosSecure.jsx";
 import Swale from "sweetalert2";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 export const TeacherRequest = () => {
-  const axiosSecure = useAxiosPrivate();
+  const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
   const { Column } = Table;
   const { data } = useQuery({
@@ -32,6 +33,9 @@ export const TeacherRequest = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Dashboard | Teacher Request</title>
+      </Helmet>
       <div className={"h-[80vh]"}>
         <Table dataSource={data?.data}>
           <Column

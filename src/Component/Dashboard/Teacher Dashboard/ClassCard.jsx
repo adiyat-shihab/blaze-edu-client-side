@@ -15,7 +15,7 @@ import UseAxiosOpen from "../../../Hooks/UseAxiosOpen.jsx";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useAxiosPrivate } from "../../../Hooks/useAxiosPrivate.jsx";
+import { useAxiosSecure } from "../../../Hooks/useAxiosSecure.jsx";
 
 export const ClassCard = ({ item }) => {
   const [open, setOpen] = useState(false);
@@ -23,7 +23,7 @@ export const ClassCard = ({ item }) => {
   const [fileList, setFileList] = useState([]);
   const [image, setImage] = useState("");
   const queryClient = useQueryClient();
-  const axiosSecure = useAxiosPrivate();
+  const axiosSecure = useAxiosSecure();
 
   const { register, handleSubmit } = useForm();
   const axiosOpen = UseAxiosOpen();

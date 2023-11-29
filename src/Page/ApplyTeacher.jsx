@@ -5,11 +5,11 @@ import { useState } from "react";
 import { UseAuth } from "../Hooks/UseAuth.jsx";
 import useAxiosOpen from "../Hooks/UseAxiosOpen.jsx";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAxiosPrivate } from "../Hooks/useAxiosPrivate.jsx";
+import { useAxiosSecure } from "../Hooks/useAxiosSecure.jsx";
 import Swal from "sweetalert2";
 
 export const ApplyTeacher = () => {
-  const axiosSecure = useAxiosPrivate();
+  const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
   const { userDetails } = UseAuth();
 
